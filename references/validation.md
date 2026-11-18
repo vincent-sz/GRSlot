@@ -2,9 +2,11 @@
 
 ## 已提供的准备工具
 
-运行 `python3 -m unittest discover -s tests -v`。指定 `GRSLOT_OFFICIAL_FIRMWARE` 后执行真实原厂容器集成检查。工具必须拒绝错误 SHA、IIIx/其他机型 profile、缺少拟合、来源不匹配、preview 冒充原件、范围检查缺失、非有限数值及参数溢出。
+运行 `python3 -m unittest discover -s tests -v`。指定 `GRSLOT_OFFICIAL_FIRMWARE` 后执行真实原厂容器集成检查。工具必须拒绝错误 SHA、IIIx/其他机型 profile、缺少拟合、来源不匹配、preview 冒充原件、范围声明缺失、非有限数值及参数溢出。
 
-`verify_assets.py` 对照清单逐一核验 profile、三个原生数据文件、原生整数编码、图标尺寸、51 款唯一身份及默认六槽。
+`verify_assets.py` 对照清单逐一核验 profile、三个原生数据文件、原生整数编码、图标尺寸、51 款唯一身份及默认六槽。使用 `python3 scripts/verify_assets.py /absolute/prepared-project` 校验实际交付目录，核对所选胶片与六槽，并检查每款必需文件的完整集合。
+
+`tests/verification.json` 是旧版历史记录。当前结果以本次命令实跑为准。
 
 导入测试区分原厂集成检查和模拟输入校验。模拟原厂检查的测试不能充当实际容器或相机证据。
 
@@ -19,7 +21,7 @@
 5. 完整 UI 页面、分类计数、默认映射、资源、导航及恢复默认；复用视图后其他菜单的显示与按键隔离、原生绘制保全以及 GRSlot 返回。
 6. DNG、RAW 显影、Playback/DISP 和 Grain 对应路径，原厂与非 Golden 回归。
 7. 每个容器 block 的边界和允许变化，解码与重封装往返、编码和解码 sum32、确定性重建、磁盘读回及完整最终 SHA。
-8. 发布准入扫描覆盖源文件、数据、历史残留模块和 Git 历史。删除菜单条目不足以证明付费内容已清除。
+8. 发布准入扫描覆盖源文件、数据、历史残留模块和 Git 历史。仅检查菜单条目不能替代资产与历史扫描。
 
 固件构建能力未就绪或任一必要检查失败时，不能输出可升级固件作为完成交付。
 

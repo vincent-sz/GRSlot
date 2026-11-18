@@ -22,6 +22,6 @@ RICOH、GR、Kodak、Fujifilm、Adobe 等名称和标识归各权利人所有，
 
 用户自行提供的 LUT、图像和拟合参数按其原有来源及授权处理。它们不会因本地导入自动成为本仓库授权的数据。用户导入输出应保存在仓库以外。
 
-Spectral Film LUT 为 Jan Lohse 的 MIT 数据，许可随附于 `licenses/SPECTRAL_FILM_LUT_LICENSE.txt`。
+Jan Lohse 的 Spectral Film LUT 项目使用 MIT，许可随附于 `licenses/SPECTRAL_FILM_LUT_LICENSE.txt`。Alcedo 中间导出和转换记录见 [CHANGELOG.txt](CHANGELOG.txt)，实际导出包版本与授权范围待公开前复核。
 
 历史完整底座和稀疏二进制补丁均未发布。

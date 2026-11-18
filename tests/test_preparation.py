@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from native_profile import (BASE_MODEL, ENVELOPE_MODEL, FACTORY_SHA256, encode_profile,
                             json_bytes, read_json, sha256)
 from check_firmware import inspect_firmware
-from import_darkslide import fitted_entry, prepare
+from import_darkslide import BASE_VALUES_SHA256, fitted_entry, prepare
 from verify_assets import verify_assets
 
 
@@ -31,7 +31,7 @@ class PreparationTests(unittest.TestCase):
             kind="user_lut", source_sha256=sha256(cube), official_sha256=FACTORY_SHA256,
             fitter="darkslide-film-fit-v2", base_model_id=BASE_MODEL,
             target_input_encoding="srgb", target_ev=0, mid_index=7.8,
-            base_values_sha256="1" * 64)
+            base_values_sha256=BASE_VALUES_SHA256)
         self.entry = dict(name="My film", sha256=sha256(cube), profile=self.profile,
                           fit=dict(fitter="darkslide-film-fit-v2", base_model_id=BASE_MODEL,
                                    layout="four_curve_v1", envelope=dict(
@@ -116,6 +116,41 @@ class PreparationTests(unittest.TestCase):
             encode_profile(self.profile)
 
     @patch("import_darkslide.inspect_firmware", return_value={"test_fixture": True})
+    def test_bundled_selection_and_final_output_verification(self, unused):
+        output = self.folder / "selection"
+        receipt = prepare(None, [], self.folder / "official.bin", output, selected=[5, 8],
+                          slots=[8, 5, 8, 5, 8, 5])
+        self.assertEqual(receipt["selected"], [5, 8])
+        self.assertEqual(receipt["fit_evidence"], "NO_LUT_IMPORT")
+        self.assertFalse((output / "assets/library.json").exists())
+        self.assertEqual(verify_assets(output)["selected"], 2)
+        path = output / "library.json"
+        manifest = read_json(path)
+        film = manifest["films"][0]
+        del film["files"]["RGB_GAMMA_u16.bin"]
+        (output / film["profile"]).with_name("RGB_GAMMA_u16.bin").unlink()
+        path.write_bytes(json_bytes(manifest))
+        with self.assertRaisesRegex(ValueError, "Incomplete"):
+            verify_assets(output)
+        retry = self.folder / "retry"
+        with self.assertRaisesRegex(ValueError, "Incomplete"):
+            prepare(None, [], self.folder / "official.bin", retry, output, selected=[5, 8])
+        self.assertFalse(retry.exists())
+
+    @patch("import_darkslide.inspect_firmware", return_value={"test_fixture": True})
+    def test_slots_must_use_selected_films(self, unused):
+        output = self.folder / "invalid-slots"
+        with self.assertRaisesRegex(ValueError, "selected film UID"):
+            prepare(None, [], self.folder / "official.bin", output, selected=[8], slots=[5] * 6)
+        self.assertFalse(output.exists())
+
+    def test_wrong_base_values_hash_rejected(self):
+        self.profile["provenance"]["base_values_sha256"] = "0" * 64
+        self.save()
+        with self.assertRaisesRegex(ValueError, "base identity"):
+            fitted_entry(self.project, self.ident)
+
+    @patch("import_darkslide.inspect_firmware", return_value={"test_fixture": True})
     def test_append_retry_and_private_output(self, unused):
         before = {str(p): p.read_bytes() for p in self.project.rglob("*") if p.is_file()}
         first = self.folder / "first"
@@ -125,13 +160,20 @@ class PreparationTests(unittest.TestCase):
         manifest = read_json(first / "library.json")
         self.assertEqual(manifest["next_uid"], 86)
         self.assertEqual(manifest["films"][-1]["uid"], 85)
+        self.assertEqual(receipt["fit_evidence"], "DARKSLIDE_DECLARATION_ONLY")
+        self.assertEqual(before, {str(p): p.read_bytes() for p in self.project.rglob("*") if p.is_file()})
+        self.profile = dict(reversed(list(self.profile.items())))
+        self.entry["profile"] = self.profile
+        self.save()
+        reordered = {str(p): p.read_bytes() for p in self.project.rglob("*") if p.is_file()}
         second = self.folder / "second"
         receipt = prepare(self.project, [self.ident], self.folder / "official.bin", second, first)
         self.assertEqual(receipt["new_films"], 0)
         self.assertEqual(read_json(second / "library.json")["next_uid"], 86)
         with self.assertRaisesRegex(ValueError, "fresh"):
             prepare(self.project, [self.ident], self.folder / "official.bin", first)
-        self.assertEqual(before, {str(p): p.read_bytes() for p in self.project.rglob("*") if p.is_file()})
+        self.assertEqual(receipt["imported_uids"], [85])
+        self.assertEqual(reordered, {str(p): p.read_bytes() for p in self.project.rglob("*") if p.is_file()})
 
     @patch("import_darkslide.inspect_firmware", return_value={"test_fixture": True})
     def test_display_name_override(self, unused):

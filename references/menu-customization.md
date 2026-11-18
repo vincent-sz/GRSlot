@@ -7,7 +7,7 @@
 - `source/p5/menu.c` 为当前分发包的菜单主体，12 个可达页面，保留枚举编号 MAIN。
 - `source/p5/core.c` 为既有 Assignment journal 逻辑。
 - `source/p5/p4a.h`、`native_font.inc`、`native_frame.inc` 为现有 ABI 和绘制适配。
-- `assets/icons/films/` 提供本次准入胶片的 40×40 RGBA、PNG、描边 SVG 及布局数据。
+- `assets/icons/films/` 提供 51 款胶片的 40×40 RGBA，首批 12 款另有 PNG、描边 SVG 和布局数据。
 - `assets/icons/ui/` 提供菜单图标 SVG 和原始图标数据。
 
 三个头文件 `film_bank.h`、`library_data.h`、`families.h` 必须由经过验证的平台构建生成。本开发包用明确的编译错误保护这一缺口，防止未经绑定的地址进入候选。

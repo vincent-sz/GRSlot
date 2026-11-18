@@ -29,11 +29,26 @@ python3 scripts/verify_assets.py
 
 ## 按任务读取和执行
 
+### 配置随附胶片
+
+用 [胶片清单](assets/library.json) 的 UID 选择预设，按 Slot 1 到 Slot 6 顺序指定默认胶片。每个槽位须指向已选 UID。这里创建的是本地数据项目。
+
+```bash
+python3 scripts/import_darkslide.py \
+  --firmware /absolute/official/fwdc239b.bin \
+  --select 5 8 9 \
+  --slots 5 8 9 5 8 9 \
+  --output /absolute/new-grslot-project
+python3 scripts/verify_assets.py /absolute/new-grslot-project
+```
+
+成品目录的根 `library.json` 是唯一配置清单。`films` 保留可用目录，`selected` 指定本次选用的 UID，`defaults` 按顺序对应六槽。回执包含清单 SHA-256。本地目录可用 `--previous` 继续配置。
+
 ### 拟合并导入胶片
 
 收到原始 CUBE 时，先在 [DARKSLIDE GR](https://github.com/LiorMoment/darkslide-gr) 核对色彩空间，完成拟合和原厂范围检查。导出 CUBE 用于外观预览，准备脚本读取真实项目与 profile。
 
-读取 [Darkslide 输入契约](references/darkslide-import.md)。从真实项目读取 `profile`，核对源 CUBE 身份、原厂 SHA、拟合器、基础模型和成功的 factory envelope。
+读取 [Darkslide 输入契约](references/darkslide-import.md)。从真实项目读取 `profile`，核对源 CUBE 身份、原厂 SHA、拟合器、基础模型及指定基底 SHA，并检查 Darkslide 声明的 factory envelope 结果。
 
 ```bash
 python3 scripts/import_darkslide.py \
@@ -43,7 +58,7 @@ python3 scripts/import_darkslide.py \
   --output /absolute/new-grslot-project
 ```
 
-`--id` 可重复。增量导入用 `--previous /absolute/previous-project`，输出选择新的同级目录。相同 profile 复用 UID，新增 UID 追加，退役 UID 保留。名称覆盖用单条导入的 `--name`，作者用 `--author`，未知作者保留 Unknown。用户数据留在本地项目。
+`--id` 可重复。增量导入用 `--previous /absolute/previous-project`，输出选择新的同级目录。内容相同的 profile 复用 UID，JSON 键顺序不改变身份。新增 UID 追加，退役 UID 保留。省略选片参数时保留上一次选择，并加入本次导入的 UID。名称覆盖用单条导入的 `--name`，作者用 `--author`，未知作者保留 Unknown。用户数据留在本地项目。
 
 缺少真实 profile 时先完成 Darkslide 拟合。外观 CUBE 无法替代相机参数。M2 沿用现有精确 CSP 编码，完整保留 RGB 曲线和 M1。
 

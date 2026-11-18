@@ -1,6 +1,7 @@
 {
   "date": "2026-11-09",
   "stage": "PRIVATE_DEVELOPMENT_PREPARATION",
+  "scope": "Historical 12-preset baseline only; not validation of the current repository or a prepared project.",
   "unit_tests": 18,
   "unit_tests_passed": 18,
   "real_official_validation": true,

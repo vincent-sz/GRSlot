@@ -6,7 +6,6 @@ This prepares a local data bundle. It does not generate a firmware container.
 Validation follows Darkslide GR store.film_lut_profiles, pinned in SOURCES.md.
 """
 import argparse
-import copy
 import re
 import shutil
 from pathlib import Path
@@ -15,8 +14,10 @@ from check_firmware import inspect_firmware
 from native_profile import (BASE_MODEL, ENVELOPE_MODEL, FACTORY_SHA256, encode_profile,
                             json_bytes, read_json, require, sha256)
 from cube_reader import parse_cube
+from verify_assets import validate_selection, verify_assets
 
 ROOT = Path(__file__).resolve().parents[1]
+BASE_VALUES_SHA256 = "1d93a184b1675ec008db52ea0251006422677b4e68ff160332ad0efca6b53900"
 
 
 def fitted_entry(project, ident):
@@ -49,53 +50,44 @@ def fitted_entry(project, ident):
     require(fit.get("layout") == "four_curve_v1"
             and provenance.get("target_input_encoding") == "srgb"
             and provenance.get("target_ev") == 0 and provenance.get("mid_index") == 7.8
-            and re.fullmatch(r"[0-9a-f]{64}", str(provenance.get("base_values_sha256", ""))),
+            and provenance.get("base_values_sha256") == BASE_VALUES_SHA256,
             "Unsupported fitting assumptions or missing base identity")
+    # shortcut: upstream range declaration only, recompute when a pinned bounds evaluator is available.
     require(envelope.get("checked") is True and envelope.get("model_id") == ENVELOPE_MODEL
-            and envelope.get("violations") == [], "Require a successful factory-envelope check")
+            and envelope.get("violations") == [], "Require Darkslide’s successful factory-envelope declaration")
     json_bytes(entry)
     files = encode_profile(profile)
     return entry, profile, files
 
 
-def prepare(project, identifiers, firmware, output, previous=None, author="Unknown", name=None):
+def prepare(project, identifiers, firmware, output, previous=None, author="Unknown", name=None,
+            *, selected=None, slots=None):
     require(output.is_absolute(), "Use an absolute output path")
     require(not output.resolve().is_relative_to(ROOT), "Keep private user imports outside the skill repository")
     require(not output.exists(), "Choose a fresh output directory")
-    require(bool(identifiers) and len(set(identifiers)) == len(identifiers), "Select unique fitted LUT IDs")
+    require(len(set(identifiers)) == len(identifiers), "Select unique fitted LUT IDs")
+    require(bool(project) == bool(identifiers), "Provide --project and --id together")
+    if project:
+        require(not output.resolve().is_relative_to(project.resolve()),
+                "Output must be outside the Darkslide project")
+    require(identifiers or selected is not None or slots is not None, "Specify LUTs, selection or slots")
     require(name is None or len(identifiers) == 1, "A display-name override requires one selected LUT")
     official = inspect_firmware(firmware)
     source = previous.resolve() if previous else ROOT
     require(not output.resolve().is_relative_to(source), "Output must be outside its source project")
     manifest_path = source / "library.json" if previous else source / "assets/library.json"
-    manifest = copy.deepcopy(read_json(manifest_path))
-    require(type(manifest.get("next_uid")) is int and manifest["next_uid"] >= 39,
-            "Invalid persistent UID registry")
-    existing_uids = [film["uid"] for film in manifest["films"]]
-    require(len(existing_uids) == len(set(existing_uids))
-            and all(type(uid) is int and 1 <= uid < manifest["next_uid"] for uid in existing_uids),
-            "Corrupt or reused existing film UID")
-    require(not set(existing_uids).intersection(manifest["retired_uids"]),
-            "A retired film UID was reused")
-    require(len(manifest["defaults"]) == 6 and set(manifest["defaults"]) <= set(existing_uids),
-            "Default slot references a missing film")
-    for film in manifest["films"]:
-        stored_profile = source / film["profile"]
-        require(stored_profile.resolve().is_relative_to(source.resolve()), "Stored profile path leaves project")
-        encoded = encode_profile(read_json(stored_profile))
-        for filename, digest in film["files"].items():
-            require(Path(filename).name == filename, "Unsafe stored parameter filename")
-            data = (stored_profile.parent / filename).read_bytes()
-            require(sha256(data) == digest, "Existing parameter hash differs: " + filename)
-            if filename in encoded:
-                require(data == encoded[filename], "Existing parameter encoding differs: " + filename)
+    manifest = read_json(manifest_path)
+    verify_assets(source)
+    stored = [(film["uid"], read_json(source / film["profile"])) for film in manifest["films"]]
     pending = []
+    imported_uids = []
     for ident in identifiers:
         entry, profile, encoded = fitted_entry(project, ident)
         profile_bytes = json_bytes(profile)
         fingerprint = sha256(profile_bytes)
-        match = next((f for f in manifest["films"] if f.get("profile_sha256") == fingerprint), None)
-        if match:
+        match = next((uid for uid, prior in stored if prior == profile), None)
+        if match is not None:
+            imported_uids.append(match)
             continue
         uid = manifest["next_uid"]
         require(type(uid) is int and 39 <= uid <= 65535, "No valid append-only UID available")
@@ -115,21 +107,37 @@ def prepare(project, identifiers, firmware, output, previous=None, author="Unkno
                                   "icon": None})
         manifest["next_uid"] = uid + 1
         pending.append((key, profile_bytes, encoded))
+        imported_uids.append(uid)
+    if selected is None:
+        selected = list(dict.fromkeys([*manifest.get("selected", [uid for uid, _ in stored]),
+                                       *imported_uids]))
+    if slots is not None:
+        manifest["defaults"] = slots
+    manifest["selected"] = selected
+    validate_selection(manifest)
     manifest["status"] = "PREPARED_DATA_ONLY"
     # All input checks finish before creating the output. Existing projects are immutable.
     output.mkdir(parents=True, exist_ok=False)
     try:
-        shutil.copytree(source / "assets", output / "assets")
+        shutil.copytree(source / "assets", output / "assets", symlinks=True,
+                        ignore=lambda path, names: {"library.json"} if Path(path) == source / "assets" else ())
+        require(not any(path.is_symlink() for path in (output / "assets").rglob("*")),
+                "Prepared assets must not contain symbolic links")
         for key, profile_bytes, encoded in pending:
             folder = output / "assets/presets" / key
             folder.mkdir()
             (folder / "profile.json").write_bytes(profile_bytes)
             for name, content in encoded.items():
                 (folder / name).write_bytes(content)
-        (output / "library.json").write_bytes(json_bytes(manifest))
+        manifest_bytes = json_bytes(manifest)
+        (output / "library.json").write_bytes(manifest_bytes)
+        checked = verify_assets(output)
         receipt = {"status": "PASS_DATA_PREPARATION_ONLY", "official": official,
                    "new_films": len(pending), "film_count": len(manifest["films"]),
-                   "defaults": manifest["defaults"], "firmware_generated": False,
+                   "defaults": manifest["defaults"], "selected": selected, "imported_uids": imported_uids,
+                   "asset_validation": checked["status"], "library_sha256": sha256(manifest_bytes),
+                   "fit_evidence": "DARKSLIDE_DECLARATION_ONLY" if identifiers else "NO_LUT_IMPORT",
+                   "firmware_generated": False,
                    "source_project_modified": False, "private_user_data": True}
         (output / "RECEIPT.json").write_bytes(json_bytes(receipt))
     except BaseException:
@@ -140,9 +148,11 @@ def prepare(project, identifiers, firmware, output, previous=None, author="Unkno
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--project", required=True, type=Path)
+    parser.add_argument("--project", type=Path)
     parser.add_argument("--firmware", required=True, type=Path)
-    parser.add_argument("--id", action="append", required=True, dest="identifiers")
+    parser.add_argument("--id", action="append", default=[], dest="identifiers")
+    parser.add_argument("--select", nargs="+", type=int, help="Selected film UIDs")
+    parser.add_argument("--slots", nargs=6, type=int, help="Default film UIDs for slots 1–6")
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--previous", type=Path, help="Previous prepared local project directory")
     parser.add_argument("--author", default="Unknown")
@@ -150,9 +160,9 @@ def main():
     args = parser.parse_args()
     try:
         receipt = prepare(args.project, args.identifiers, args.firmware, args.output,
-                          args.previous, args.author, args.name)
+                          args.previous, args.author, args.name, selected=args.select, slots=args.slots)
         print(json_bytes(receipt).decode(), end="")
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, AttributeError) as error:
         parser.exit(2, str(error) + "\n")
 
 

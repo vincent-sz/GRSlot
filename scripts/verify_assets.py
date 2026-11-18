@@ -9,44 +9,82 @@ from native_profile import encode_profile, json_bytes, read_json, require, sha25
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def validate_selection(library):
+    uids = {film["uid"] for film in library["films"]}
+    selected = library.get("selected", sorted(uids))
+    defaults = library["defaults"]
+    require(type(selected) is list and selected and all(type(uid) is int and uid in uids for uid in selected)
+            and len(selected) == len(set(selected)), "Selection contains duplicate or unknown film UIDs")
+    require(type(defaults) is list and len(defaults) == 6
+            and all(type(uid) is int and uid in selected for uid in defaults),
+            "Each default slot must point to a selected film UID")
+    return selected
+
+
 def verify_assets(root=ROOT):
-    library = read_json(root / "assets/library.json")
+    root = root.resolve()
+    prepared = root != ROOT and (root / "library.json").is_file()
+    library = read_json(root / ("library.json" if prepared else "assets/library.json"))
     films = library["films"]
-    identifiers = [film["uid"] for film in films]
-    require(len(identifiers) == len(set(identifiers)), "Duplicate film UID")
-    require(library["defaults"] == [18, 12, 14, 9, 5, 11], "Unexpected default slots")
-    require(set(library["defaults"]) <= set(identifiers), "Default points outside the film library")
-    require(not set(identifiers).intersection(library["retired_uids"])
-            and library["next_uid"] == max(identifiers) + 1, "Invalid persistent UID registry")
-    require(Counter(f["license"] for f in films) == {
-        "CC-BY-SA-4.0": 16, "MIT": 35,
-    }, "Unexpected film counts by license")
+    uids = {film["uid"] for film in films}
+    next_uid = library["next_uid"]
+    retired = library["retired_uids"]
+    require(type(next_uid) is int and 39 <= next_uid <= 65536
+            and len(uids) == len(films)
+            and all(type(uid) is int and 0 < uid < next_uid for uid in [*uids, *retired])
+            and len(set(retired)) == len(retired) and uids.isdisjoint(retired),
+            "Invalid persistent UID registry")
     require(len({f["key"] for f in films}) == len(films), "Duplicate logical film")
+    selected = validate_selection(library)
+    defaults = library["defaults"]
+    if not prepared:
+        require(defaults == [18, 12, 14, 9, 5, 11], "Unexpected curated defaults")
+        require(Counter(f["license"] for f in films) == {
+            "CC-BY-SA-4.0": 16, "MIT": 35,
+        }, "Unexpected film counts by license")
     for film in films:
         profile_path = root / film["profile"]
-        require(profile_path.resolve().is_relative_to(root.resolve()), "Asset path leaves the package")
+        require(profile_path.name == "profile.json"
+                and profile_path.resolve().is_relative_to(root / "assets"),
+                "Profile must be under assets")
         profile = read_json(profile_path)
         require(profile["provenance"]["source_sha256"] == film["source_sha256"],
                 "Source identity mismatch")
         encoded = encode_profile(profile)
+        custom = film["license"] == "USER_SUPPLIED_REVIEW_REQUIRED"
+        needed = {"profile.json", *encoded}
+        if not custom:
+            needed.remove("CSP_ENCODING.json")
+        require(set(film["files"]) == needed, "Incomplete or unexpected file set: " + film["key"])
         for name, expected in film["files"].items():
-            raw = (profile_path.parent / name).read_bytes()
+            path = profile_path.with_name(name)
+            require(path.resolve().is_relative_to(root / "assets"), "Parameter path leaves assets")
+            raw = path.read_bytes()
             require(sha256(raw) == expected, "Asset hash mismatch: " + film["key"] + "/" + name)
-            if name != "profile.json":
+            if name in encoded:
                 require(raw == encoded[name], "Native ABI mismatch: " + name)
-        icon = root / film["icon"]
-        require(len(icon.read_bytes()) == 40 * 40 * 4, "Film icon must be 40x40 RGBA")
-        require(sha256(icon.read_bytes()) == film["icon_sha256"], "Film icon hash differs")
-    return {"status": "PASS_CURATED_ASSETS_AND_NATIVE_ENCODING", "films": len(films),
+            if name == "profile.json" and "profile_sha256" in film:
+                require(expected == film["profile_sha256"], "Profile hash differs")
+        if custom and film["icon"] is None:
+            continue
+        icon = (root / film["icon"]).resolve()
+        require(icon.is_relative_to(root / "assets"), "Icon path leaves assets")
+        raw = icon.read_bytes()
+        require(len(raw) == 40 * 40 * 4, "Film icon must be 40x40 RGBA")
+        require(sha256(raw) == film["icon_sha256"], "Film icon hash differs")
+    return {"status": ("PASS_PREPARED_ASSETS_AND_NATIVE_ENCODING" if prepared
+                       else "PASS_CURATED_ASSETS_AND_NATIVE_ENCODING"), "films": len(films),
+            "selected": len(selected),
             "defaults": [next(f["name"] for f in films if f["uid"] == uid)
-                         for uid in library["defaults"]], "firmware_generated": False}
+                         for uid in defaults], "firmware_generated": False}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
+    parser.add_argument("directory", nargs="?", type=Path, default=ROOT)
+    args = parser.parse_args()
     try:
-        print(json_bytes(verify_assets()).decode(), end="")
+        print(json_bytes(verify_assets(args.directory)).decode(), end="")
     except (OSError, ValueError, KeyError, TypeError) as error:
         parser.exit(2, str(error) + "\n")
 
