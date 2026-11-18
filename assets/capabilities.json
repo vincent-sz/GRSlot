@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "stage": "PUBLIC_METHOD_ONLY",
+  "platform": "macOS",
+  "official_input_validation": true,
+  "darkslide_project_import": true,
+  "native_data_encoding": true,
+  "curated_presets": true,
+  "menu_source": true,
+  "portable_firmware_build": false,
+  "firmware_container_output": false,
+  "sd_deployment": false,
+  "reason": "Public scope is input validation, film data preparation and source reference.",
+  "curated_films": 51
+}

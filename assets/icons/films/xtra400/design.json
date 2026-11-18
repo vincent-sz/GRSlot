@@ -1,0 +1,45 @@
+{
+  "fontFamily": "Source Han Sans CN",
+  "fontWeight": "Bold",
+  "brand": "FUJIFILM",
+  "label": "X-TRA",
+  "main": "400",
+  "bodyColour": "#EDEBD9",
+  "accent": "#BA2946",
+  "push": null,
+  "textLayout": [
+    {
+      "text": "FUJIFILM",
+      "bounds": [
+        4.0,
+        4.252047315741583,
+        36.0,
+        9.747952684258417
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 7
+    },
+    {
+      "text": "X-TRA",
+      "bounds": [
+        8.715384615384615,
+        16.266666666666666,
+        31.284615384615385,
+        21.966666666666665
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 19.116666666666667
+    },
+    {
+      "text": "400",
+      "bounds": [
+        7.234700520833332,
+        24.23333333333333,
+        32.76529947916667,
+        35.733333333333334
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 29.98333333333333
+    }
+  ]
+}

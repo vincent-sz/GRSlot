@@ -1,0 +1,45 @@
+{
+  "fontFamily": "Source Han Sans CN",
+  "fontWeight": "Bold",
+  "brand": "FUJIFILM",
+  "label": "COLOR",
+  "main": "200",
+  "bodyColour": "#164D34",
+  "accent": "#F7C32D",
+  "push": null,
+  "textLayout": [
+    {
+      "text": "FUJIFILM",
+      "bounds": [
+        4.0,
+        4.252047315741583,
+        36.0,
+        9.747952684258417
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 7
+    },
+    {
+      "text": "COLOR",
+      "bounds": [
+        7.460742187499999,
+        16.266666666666666,
+        32.5392578125,
+        21.966666666666665
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 19.116666666666667
+    },
+    {
+      "text": "200",
+      "bounds": [
+        7.369466145833332,
+        24.23333333333333,
+        32.63053385416667,
+        35.733333333333334
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 29.98333333333333
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "fontFamily": "Source Han Sans CN",
+  "fontWeight": "Bold",
+  "brand": "KODAK",
+  "label": "GOLD",
+  "main": "200",
+  "bodyColour": "#B02186",
+  "accent": null,
+  "push": null,
+  "textLayout": [
+    {
+      "text": "KODAK",
+      "bounds": [
+        7.567708333333334,
+        4.2,
+        32.432291666666664,
+        9.8
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 7
+    },
+    {
+      "text": "GOLD",
+      "bounds": [
+        10.088085937499999,
+        14.933333333333335,
+        29.911914062500003,
+        20.633333333333336
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 17.783333333333335
+    },
+    {
+      "text": "200",
+      "bounds": [
+        7.369466145833332,
+        23.566666666666666,
+        32.63053385416667,
+        35.06666666666666
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 29.316666666666666
+    }
+  ]
+}

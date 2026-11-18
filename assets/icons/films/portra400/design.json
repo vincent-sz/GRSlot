@@ -1,0 +1,45 @@
+{
+  "fontFamily": "Source Han Sans CN",
+  "fontWeight": "Bold",
+  "brand": "KODAK",
+  "label": "PORTRA",
+  "main": "400",
+  "bodyColour": "#F7C32D",
+  "accent": null,
+  "push": null,
+  "textLayout": [
+    {
+      "text": "KODAK",
+      "bounds": [
+        7.567708333333334,
+        4.2,
+        32.432291666666664,
+        9.8
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 7
+    },
+    {
+      "text": "PORTRA",
+      "bounds": [
+        5.230468749999998,
+        14.266666666666667,
+        34.76953125,
+        19.96666666666667
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 17.116666666666667
+    },
+    {
+      "text": "400",
+      "bounds": [
+        7.234700520833332,
+        22.233333333333334,
+        32.76529947916667,
+        33.733333333333334
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 27.983333333333334
+    }
+  ]
+}

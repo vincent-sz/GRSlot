@@ -1,0 +1,45 @@
+{
+  "fontFamily": "Source Han Sans CN",
+  "fontWeight": "Bold",
+  "brand": "FUJIFILM",
+  "label": "PRO",
+  "main": "400H",
+  "bodyColour": "#EDEBD9",
+  "accent": "#C3267E",
+  "push": null,
+  "textLayout": [
+    {
+      "text": "FUJIFILM",
+      "bounds": [
+        4.0,
+        4.252047315741583,
+        36.0,
+        9.747952684258417
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 7
+    },
+    {
+      "text": "PRO",
+      "bounds": [
+        12.674609375,
+        16.707867494824015,
+        27.325390625,
+        22.407867494824014
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 19.557867494824016
+    },
+    {
+      "text": "400H",
+      "bounds": [
+        4.0,
+        25.115734989648033,
+        36.0,
+        35.292132505175985
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 30.20393374741201
+    }
+  ]
+}

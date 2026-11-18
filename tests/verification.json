@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-09",
+  "stage": "PRIVATE_DEVELOPMENT_PREPARATION",
+  "unit_tests": 18,
+  "unit_tests_passed": 18,
+  "real_official_validation": true,
+  "real_input_synthetic_darkslide_import": true,
+  "native_presets_verified": 12,
+  "default_slots": 6,
+  "production_firmware_built": false,
+  "new_camera_test": false,
+  "sd_written": false,
+  "full_framework_status": "BLOCKED",
+  "integration": {
+    "status": "PASS_DATA_PREPARATION_ONLY",
+    "official": {
+      "status": "PASS_OFFICIAL_INPUT_ONLY",
+      "model": "GR III",
+      "firmware": "2.10",
+      "sha256": "d6a3c9c288d784080e7b283222ecdd8752adfeed6faa36dab44f73115354bfd4",
+      "bytes": 30391780,
+      "decoded_sha256": "53da690797f35ad6dc2c429d8ca1d0de8e333c211ed959816813982cd093b703",
+      "rtos_bytes": 17520064,
+      "compressed_frames": 2430,
+      "camera_installed_firmware": "REQUIRES_USER_CONFIRMATION",
+      "firmware_generated": false
+    },
+    "new_films": 1,
+    "film_count": 13,
+    "defaults": [
+      18,
+      12,
+      14,
+      9,
+      5,
+      11
+    ],
+    "firmware_generated": false,
+    "source_project_modified": false,
+    "private_user_data": true
+  },
+  "distribution_scan": {
+    "files": 183,
+    "unique_excluded_patterns": 22,
+    "excluded_pattern_matches": 0,
+    "full_firmware_files": 0,
+    "scope": "Confirmed excluded curve/540 signatures plus positive preset allowlist. Historical full framework is absent."
+  }
+}

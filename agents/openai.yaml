@@ -1,0 +1,7 @@
+interface:
+  display_name: "ricoh-gr3-film-firmware"
+  short_description: "GR III 胶片准备与验证"
+  default_prompt: "使用 $ricoh-gr3-film-firmware，校验本机标准 GR III 2.10 原厂输入，并准备胶片数据与验证回执。"
+
+policy:
+  allow_implicit_invocation: true

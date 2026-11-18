@@ -1,0 +1,34 @@
+{
+  "fontFamily": "Source Han Sans CN",
+  "fontWeight": "Bold",
+  "brand": "KODAK",
+  "label": "",
+  "main": "5207",
+  "bodyColour": "#202326",
+  "accent": null,
+  "push": null,
+  "textLayout": [
+    {
+      "text": "KODAK",
+      "bounds": [
+        7.567708333333334,
+        4.2,
+        32.432291666666664,
+        9.8
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 7
+    },
+    {
+      "text": "5207",
+      "bounds": [
+        4.0,
+        19.6246719160105,
+        36.0,
+        30.3753280839895
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 25.0
+    }
+  ]
+}

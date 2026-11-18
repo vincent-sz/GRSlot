@@ -1,0 +1,45 @@
+{
+  "fontFamily": "Source Han Sans CN",
+  "fontWeight": "Bold",
+  "brand": "KODAK",
+  "label": "ULTRAMAX",
+  "main": "400",
+  "bodyColour": "#07539C",
+  "accent": null,
+  "push": null,
+  "textLayout": [
+    {
+      "text": "KODAK",
+      "bounds": [
+        7.567708333333334,
+        4.2,
+        32.432291666666664,
+        9.8
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 7
+    },
+    {
+      "text": "ULTRAMAX",
+      "bounds": [
+        4.0,
+        15.31182694124315,
+        36.0,
+        19.876346117513695
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 17.594086529378423
+    },
+    {
+      "text": "400",
+      "bounds": [
+        7.234700520833332,
+        23.18817305875685,
+        32.76529947916667,
+        34.688173058756846
+      ],
+      "horizontalCenter": 20,
+      "verticalCenter": 28.93817305875685
+    }
+  ]
+}

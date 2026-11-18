@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+build/
+output/
+projects/
+private/
+*.zip
+*.o
+*.su
+fwdc239b.bin
+*RTOS*.bin
+*.cube
