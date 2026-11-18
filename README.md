@@ -1,24 +1,39 @@
 # GRSlot
 
-面向 AI Agent 的 Ricoh GR III 胶片数据准备与验证方法。仓库包含可执行检查工具、51 款有来源的胶片预设、菜单参考源码和验证契约。
+为 Ricoh GR III 选胶片、配六槽。用 AI Agent 从 **51 款随附预设**中挑选，或导入你在 DARKSLIDE GR 中拟合的 LUT。
 
-**交付范围限于胶片数据、研究资料和源码。仓库不提供原厂或修改版固件、固件生成器、写卡或刷机工具。**
+[使用说明](docs/guide.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
+
+## 在相机上是什么样
+
+![GRSlot 菜单示意：六个 Golden 槽位及六款胶片图标](docs/images/six-slots.png)
+
+*FilmInfo 20261118 实机确认版的菜单离线渲染。六槽使用公开胶片做示例，具体分配由用户配置。*
+
+| 胶片库入口 | 胶片操作 | 胶片资料 |
+| --- | --- | --- |
+| ![胶片库、恢复默认和返回](docs/images/film-library.png) | ![装入槽位、收藏、胶片资料和返回](docs/images/film-actions.png) | ![Ultramax 400 的署名和备注](docs/images/film-info.png) |
+
+<details>
+<summary>展开看 Portra 800 的六个版本</summary>
+
+![Portra 800 的 Spektrafilm、Push 和 Spectral 版本](docs/images/portra-800-versions.png)
+
+</details>
+
+### 选几款看看
+
+| Ultramax 400 | Gold 200 | Portra 400 | C200 | Pro 400H | Vision3 5207 |
+| --- | --- | --- | --- | --- | --- |
+| ![Ultramax 400](assets/icons/films/ultramax400/icon.png) | ![Gold 200](assets/icons/films/gold200/icon.png) | ![Portra 400](assets/icons/films/portra400/icon.png) | ![C200](assets/icons/films/c200/icon.png) | ![Pro 400H](assets/icons/films/pro400h/icon.png) | ![Vision3 5207](assets/icons/films/vision3-5207/icon.png) |
 
 ## 交给 Agent
 
-把仓库地址发给 Agent，并说明你想使用哪些胶片、如何分配六槽、是否有自己的 LUT。例如：
+把仓库地址和本机的**标准 GR III 原厂 2.10** 文件路径交给 Agent，再告诉它选哪些胶片、六槽怎么排。例如：
 
-> 请读取 GRSlot 的 SKILL.md。帮我校验本机提供的标准 GR III 原厂 2.10 文件，并根据我选的胶片准备本地配置及验证回执。
+> 请按 GRSlot 的 SKILL.md，校验我本机的原厂 2.10 文件。帮我选 Vision3 5207、Gold 200、Portra 400、Pro 400H、Ultramax 400 和 Ektar100，按顺序分配六槽，保存本地配置并给我验证回执。
 
-1. macOS 上使用 Python 3.9 或以上。从 Ricoh 官方渠道自行取得原厂更新包并解压，向 Agent 提供本机文件路径。
-2. Agent 核对文件的完整 SHA-256、容器结构和参数基底。唯一支持的输入是标准 **GR III 原厂 2.10**。如果进一步评估机身兼容性，请在相机上另行核对机型和当前版本。版本高于 2.10 时停止，不尝试降级。
-3. 按 [随附胶片配置示例](SKILL.md#配置随附胶片) 选择预设和六槽，或用 [DARKSLIDE GR](https://github.com/LiorMoment/darkslide-gr) 拟合自己的 LUT，再让 Agent 导入真实 profile，整理输出清单及校验回执。[Skill 入口](SKILL.md) · [Darkslide 输入契约](references/darkslide-import.md)
-
-```bash
-python3 scripts/check_firmware.py /absolute/path/to/official/fwdc239b.bin
-python3 scripts/verify_assets.py
-python3 -m unittest discover -s tests
-```
+**本仓库提供数据准备、验证工具和菜单参考源码。** 交付是胶片清单、参数和回执，无固件下载、生成或安装入口。[完整步骤和命令](docs/guide.md)
 
 ## 使用范围与免责声明
 
