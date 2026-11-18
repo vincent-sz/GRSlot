@@ -21,11 +21,11 @@
 
 </details>
 
-### 选几款看看
+### 胶片图标
 
-| Ultramax 400 | Gold 200 | Portra 400 | C200 | Pro 400H | Vision3 5207 |
-| --- | --- | --- | --- | --- | --- |
-| ![Ultramax 400](assets/icons/films/ultramax400/icon.png) | ![Gold 200](assets/icons/films/gold200/icon.png) | ![Portra 400](assets/icons/films/portra400/icon.png) | ![C200](assets/icons/films/c200/icon.png) | ![Pro 400H](assets/icons/films/pro400h/icon.png) | ![Vision3 5207](assets/icons/films/vision3-5207/icon.png) |
+![Ultramax 400、Gold 200、Portra 400、Pro 400H、Vision3 5207、C200 的原始像素图标](docs/images/film-icon-gallery.png)
+
+*与上方六槽使用同一套图标。40×40 原像素等比放大三倍。*
 
 ## 交给 Agent
 
