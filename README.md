@@ -1,10 +1,10 @@
 # GRSlot
 
-**你的 GR III 里，最想常备哪六卷胶片？**
+GRSlot 是一个为理光 GR III 新增六个独立影像控制槽位的项目。这六个 **Golden 槽位**独立于机内原生槽位，每槽都能自定义胶片，使用原生影像控制的九项参数，并添加原厂颗粒（Grain）。
 
-从 51 款随附预设里挑一套，给喜欢的胶片换个图标，再记一句它适合什么光线。打开浏览器里的 **Studio Lite** 就能开始配。保存项目后，把 JSON 交给本机 AI Agent 校验。想加自己的 LUT，可以先在 DARKSLIDE GR 里拟合。
+你可以在 DARKSLIDE GR 里拟合自己的 LUT，把它作为 Golden 槽位的胶片，再用机内原生参数微调，做出自己想要的相机直出（SOOC）效果。仓库随附 51 款胶片预设。你可以先用本机浏览器里的 **Studio Lite** 选片、改图标、写备注，保存为 JSON，再交给本机 Agent 校验。通用固件构建尚未接通。
 
-[开始配我的六槽](docs/guide.md) · [English user guide](docs/guide.en.md) · [浏览 51 款胶片](assets/library.json) · [Agent 工作流程](SKILL.md)
+[简体中文使用说明](docs/guide.md) · [English user guide](docs/guide.en.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
 
 ![GRSlot 菜单预览：六个 Golden 槽位及六款胶片图标](docs/images/six-slots.png)
 
@@ -12,7 +12,7 @@
 
 ## 在相机上是什么样
 
-**Golden 六槽**独立于机内原生预设，每槽保留原生影像控制的九项参数与 Grain（颗粒）。菜单总览里的 83 款是实机参考版的胶片数量。
+菜单总览里的 83 款是实机参考版的胶片数量。
 
 [简体中文总览 · 12 页](docs/images/menu-overview-zh-cn.png) · [English overview · 12 pages](docs/images/menu-overview-en.png)
 
