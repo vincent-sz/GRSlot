@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GRSlot Studio Lite</title><link rel="icon" href="data:,"><link rel="stylesheet" href="/style.css">
+<script defer src="/app.js"></script>
+</head>
+<body>
+<header><div class="wordmark">GRSlot<span>Studio Lite</span></div><div class="save-area"><span id="saveStatus" role="status">正在读取胶片库</span><button id="darkMode" class="quiet" type="button" aria-pressed="false">深色模式</button><button id="discard" class="quiet" disabled>放弃更改</button><button id="save" class="primary" disabled>保存项目</button></div></header>
+<div id="fatal" role="alert" hidden></div>
+<div id="savedLocation" class="saved-location" hidden>
+  <label for="projectPath">项目 JSON</label>
+  <input id="projectPath" type="text" readonly>
+  <button id="copyPath" class="quiet" type="button">复制路径</button>
+</div>
+<div class="workspace" id="workspace" hidden>
+<nav class="sidebar" aria-label="胶片分类"><div class="nav-title">胶片库</div><div id="categories"></div><div class="nav-title source-title">版本来源</div><select id="groupFilter" aria-label="版本来源"></select><div class="sidebar-foot">GR III · 六槽配置<br><span>项目保存在这台电脑</span></div></nav>
+<main><div class="library-heading"><div><div class="eyebrow">FILM LIBRARY</div><h1 id="libraryTitle">全部胶片</h1><p id="libraryCount"></p></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索胶片、版本或作者" aria-label="搜索胶片"></label></div><div class="view-options"><label><input type="checkbox" id="selectedOnly"> 只看已勾选</label><span>勾选的胶片纳入本次配置</span></div><div class="library-links"><a href="#film-editor">胶片资料</a><a href="#slot-editor">Golden 六槽</a></div><div id="filmGrid" class="film-grid"></div><div id="empty" class="empty" hidden>没有找到符合条件的胶片</div></main>
+<aside class="inspector"><section class="slot-editor" id="slot-editor"><div class="section-heading"><h2>Golden 六槽</h2><span>默认分配</span></div><div id="slots"></div><p class="slot-note">这里设置固件默认胶片。相机已有分配会继续沿用，可在机内恢复默认后采用。</p></section><section class="film-editor" id="film-editor"><div class="section-heading"><h2>胶片资料</h2><span id="filmUid"></span></div><div class="selected-art"><img id="detailIcon" alt="所选胶片图标"><button id="changeIcon" class="quiet small">更换图标</button><button id="editIcon" class="quiet small" type="button">自定义图标</button><input id="iconFile" type="file" accept="image/png,image/jpeg,image/webp" hidden></div><form id="details"><label class="field">显示名称<input id="filmName" maxlength="32" autocomplete="off" required><span class="field-note">英文、数字及英文符号，最多 32 字符</span></label><label class="field">分类<select id="filmCategory"></select></label><div class="provenance"><span>版本来源</span><strong id="filmSource"></strong><span>作者</span><strong id="filmAuthor"></strong></div><label class="field">自定义备注<textarea id="filmNotes" rows="4" maxlength="4000" placeholder="例如：5500K，适合晴天街拍"></textarea><span class="field-note">完整保存到项目。机内自由文本显示尚未验证。</span></label><label class="include"><input id="detailSelected" type="checkbox"> 纳入本次胶片库</label><button id="restoreDetails" type="button" class="text-button">还原此胶片资料</button></form></section></aside>
+</div>
+<div id="toast" role="status" hidden></div>
+<dialog id="replacement"><form method="dialog"><h2>先为槽位选择替代胶片</h2><p id="replacementText"></p><div id="replacementSlots"></div><div class="dialog-actions"><button value="cancel" class="quiet">保留此胶片</button><button id="confirmReplacement" value="replace" class="primary">替换并取消勾选</button></div></form></dialog>
+<dialog id="iconEditor" aria-labelledby="iconEditorTitle">
+<form id="iconForm" method="dialog" novalidate>
+  <h2 id="iconEditorTitle">自定义图标</h2>
+  <div class="icon-previews"><canvas id="iconPreview" width="40" height="40" aria-label="放大预览"></canvas><canvas id="iconActual" width="40" height="40" aria-label="40×40 原尺寸预览"></canvas></div>
+  <p>文字可用英文字母、数字、空格及 . &amp; + -</p>
+  <fieldset><legend>① 顶部</legend><label>品牌文字<input name="brand" maxlength="10" required></label><label>字色<input name="topInk" type="color"></label><label>底色<input name="topFill" type="color"></label></fieldset>
+  <fieldset><legend>② 主体</legend><label>小字（可留空）<input name="small" maxlength="10"></label><label>小字色<input name="smallInk" type="color"></label><label>底色<input name="bodyFill" type="color"></label><label>大字<input name="main" maxlength="6" required></label><label>大字色<input name="mainInk" type="color"></label></fieldset>
+  <fieldset><legend>③ 分隔线</legend><label><input name="divider" type="checkbox"> 显示</label><label>颜色<input name="dividerFill" type="color"></label></fieldset>
+  <fieldset><legend>④ 底部色条</legend><label><input name="strip" type="checkbox"> 显示</label><label>颜色<input name="stripFill" type="color"></label></fieldset>
+  <div class="icon-transfer">
+    <button id="saveIconDesign" type="button" class="quiet" disabled>另存图标模板</button>
+    <button id="loadIconDesign" type="button" class="quiet">加载图标</button>
+    <input id="iconDesignFile" type="file" accept=".json,application/json" hidden>
+  </div>
+  <p id="iconError" role="status"></p>
+  <div class="dialog-actions"><button id="cancelIcon" type="button" class="quiet">取消</button><button id="applyIcon" class="primary" disabled>应用图标</button></div>
+</form>
+</dialog>
+</body></html>

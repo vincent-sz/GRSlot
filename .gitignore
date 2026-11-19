@@ -12,3 +12,5 @@ private/
 fwdc239b.bin
 *RTOS*.bin
 *.cube
+.local-data/
+.studio-lite/

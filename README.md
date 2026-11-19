@@ -1,8 +1,8 @@
 # GRSlot
 
-为 Ricoh GR III 选胶片、配六槽。用 AI Agent 从 **51 款随附预设**中挑选，或导入你在 DARKSLIDE GR 中拟合的 LUT。
+为 Ricoh GR III 选胶片、配六槽。用本机浏览器里的 **Studio Lite** 从 51 款随附预设中选片、改图标、写备注，把保存的 JSON 交给 AI Agent 校验。自定义 LUT 可先在 DARKSLIDE GR 中拟合。
 
-[使用说明](docs/guide.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
+[简体中文使用说明](docs/guide.md) · [English user guide](docs/guide.en.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
 
 ## 在相机上是什么样
 
@@ -31,13 +31,15 @@
 
 *与上方六槽使用同一套图标。40×40 原像素等比放大三倍。*
 
-## 交给 Agent
+## 从 Studio Lite 开始
 
-把仓库地址和本机的**标准 GR III 原厂 2.10** 文件路径交给 Agent，再告诉它选哪些胶片、六槽怎么排。例如：
+![Studio Lite 的胶片库和 Golden 六槽](docs/images/studio-lite/six-slots.png)
 
-> 请按 GRSlot 的 SKILL.md，校验我本机的原厂 2.10 文件。帮我选 Vision3 5207、Gold 200、Portra 400、Pro 400H、Ultramax 400 和 Ektar100，按顺序分配六槽，保存本地配置并给我验证回执。
+1. 在 macOS 上双击 `studio-lite/启动 Studio.command`，或在仓库根目录运行 `python3 -B studio-lite/app.py`。
+2. 选片、排六槽、编辑资料，点击右上角**保存项目**。复制页面显示的 JSON 路径。
+3. 把 JSON 路径和自己取得的标准 **GR III 原厂 2.10** 固件路径交给同一台电脑上的 Agent。使用自定义库时附上对应的本地清单。
 
-**本仓库提供数据准备、验证工具和菜单参考源码。** 交付是胶片清单、参数和回执，无固件下载、生成或安装入口。[完整步骤和命令](docs/guide.md)
+**目前可完成 Studio 配置和 Agent 校验。** 通用固件构建尚未就绪，仓库交付胶片数据、验证工具和菜单参考源码。[使用说明](docs/guide.md) · [English user guide](docs/guide.en.md)
 
 ## 使用范围与免责声明
 

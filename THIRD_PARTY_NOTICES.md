@@ -12,7 +12,7 @@ Spektrafilm 作者为 Andrea Volpato。按 CC BY-SA 4.0 使用，原始许可及
 
 ## 图标与字体
 
-GRSlot 自研图标模板布局按 GPL-2.0-only 提供。Source Han Sans 字体版权及 SIL OFL 1.1 全文在 `licenses/SOURCE_HAN_SANS_LICENSE.txt`。本包附描边后的图标，字体原文件由使用者按需准备。
+GRSlot 自研图标模板布局按 GPL-2.0-only 提供。Source Han Sans 字体版权及 SIL OFL 1.1 全文在 `licenses/SOURCE_HAN_SANS_LICENSE.txt`。本包附描边后的图标。Studio Lite 的图标编辑器随附同字体的英数字子集 `studio-lite/web/icon-lettering.otf`，沿用随附 SIL OFL 1.1。
 
 RICOH、GR、Kodak、Fujifilm、Adobe 等名称和标识归各权利人所有，用于说明兼容对象及风格来源。程序或模板许可不授予这些商标的额外权利。
 

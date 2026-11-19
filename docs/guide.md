@@ -1,64 +1,67 @@
 # GRSlot 使用说明
 
-GRSlot 让 AI Agent 为标准 **Ricoh GR III** 准备一份胶片配置。可以从仓库的 51 款滤镜里选，也可以加入自己用 DARKSLIDE GR 拟合的 LUT。最终交付是本地数据目录、胶片清单和校验回执。
+简体中文 · [English](guide.en.md)
 
-## 1. 准备原厂文件
+GRSlot Studio Lite 在本机浏览器里管理胶片库和 Golden 六槽。你可以选用随附的 51 款预设，改名称、分类、图标和备注，然后把保存的项目 JSON 交给本机 Agent 校验。
 
-在 macOS 上准备 Python 3.9 或以上。通过 Ricoh 官方渠道自行取得**标准 GR III 原厂 2.10** 更新包并解压，把 `fwdc239b.bin` 的本机路径交给 Agent。工具以完整 SHA-256、容器结构和参数基底识别这份文件。同名 BIN、其他机型和更高版本文件均不能代替。
+**现在可以完成配置、保存和校验。** 通用固件构建尚未接通。当前流程交付项目 JSON 和验证结果。[当前构建状态](../references/build-status.md)
 
-如果还要检查与手头相机的对应关系，请在机身上另行确认机型和当前版本。机身版本高于 2.10 时停止，流程不支持降级。[使用前提与风险](../references/usage-and-risk.md)
+## 1. 看相机菜单和胶片图标
 
-## 2. 选胶片并设置六槽
+![六槽菜单](images/six-slots.png)
 
-把本仓库地址交给 Agent，再给它原厂 BIN 路径、想选的胶片和六槽顺序。显示名相近时，以[胶片清单](../assets/library.json)中的 UID 区分版本。
+[简体中文菜单总览 · 12 页](images/menu-overview-zh-cn.png) · [英文菜单总览 · 12 页](images/menu-overview-en.png)
 
-> 请按 GRSlot 的 SKILL.md 校验我本机的原厂 2.10 文件。选 Vision3 5207（UID 5）、Gold 200（UID 12）、Portra 400（UID 14）、Pro 400H（UID 9）、Ultramax 400（UID 18）和 Ektar100（UID 11），按这个顺序分配槽位 1 到 6。把配置输出到仓库外的新目录，验证后告诉我路径。
+![六款胶片图标](images/film-icon-gallery.png)
 
-在仓库根目录，Agent 可以直接执行同样的步骤：
+菜单图来自 FilmInfo 实机确认版的离线渲染，分类页上的 **83 款**是当时实机版的库。这个仓库随附 **51 款**。菜单里的六槽名称和图标会随槽位分配变化。
 
-```bash
-python3 scripts/import_darkslide.py \
-  --firmware /absolute/official/fwdc239b.bin \
-  --select 5 12 14 9 18 11 \
-  --slots 5 12 14 9 18 11 \
-  --output /absolute/grslot-project
+## 2. 在 Studio Lite 选片、配置六槽
 
-python3 scripts/verify_assets.py /absolute/grslot-project
-```
-
-`--select` 是本次选用的胶片，`--slots` 必须有六个 UID，且每个都在选用清单中。同一款可以分到多个槽位。
-
-## 3. 可选：加入自己的 LUT
-
-在 DARKSLIDE GR 中使用同一份原厂文件建项目。导入你有权使用的 `.cube`，核对色彩空间，完成拟合并确认 Darkslide 报告的原厂范围检查通过。接着把**项目目录**和要导入的 LUT 条目交给 Agent。它会读取真实 profile。Darkslide 导出的相机预览 CUBE 用于预览外观。
-
-从上一步的配置追加一款：
+在 macOS 上准备 Python 3.9 或以上。双击 `studio-lite/启动 Studio.command`，或在仓库根目录运行：
 
 ```bash
-python3 scripts/import_darkslide.py \
-  --project /absolute/darkslide-project \
-  --firmware /absolute/official/fwdc239b.bin \
-  --id user_lut_0123456789ab \
-  --previous /absolute/grslot-project \
-  --output /absolute/grslot-project-next
+python3 -B studio-lite/app.py
 ```
 
-`--id` 使用项目里的真实 ID。追加后看回执里的 `imported_uids`。默认保留上一次的六槽，把所导入的胶片加入选用清单。如果希望换进某个槽位，再用新目录作为 `--previous` 配置一份六槽。[Darkslide 输入契约](../references/darkslide-import.md)
+页左选分类，中间勾选要用的胶片，右侧按顺序给 Golden 槽位 1 到 6 分配胶片。每个槽位须指向已勾选的胶片。同一款可以分给多个槽位。
 
-## 4. 检查交付物
+![Studio Lite 里选了六款胶片，并设置了 Golden 六槽](images/studio-lite/six-slots.png)
 
-| 文件 | 看什么 |
-| --- | --- |
-| `library.json` | `films` 是可用目录，`selected` 是本次选片，`defaults` 按顺序对应槽位 1 到 6。 |
-| `RECEIPT.json` | 核对输入固件版本、选用 UID、六槽映射和清单 SHA-256。导入自有 LUT 时，Darkslide 的范围声明单独记录。 |
-| `assets/` | 胶片 profile、原生参数和随附图标。校验器会核对必需文件以及编码。 |
+点击胶片卡片打开「胶片资料」。用「更换图标」导入图片，或点「自定义图标」编辑文字与配色。备注例如「5500K，适合晴天街拍」，会完整保存在本地项目。机内自由文本显示仍待验证。
 
-配置目录用于检查、记录和继续调整。本仓库的交付到此为止，没有生成或安装相机固件的入口。
+![Studio Lite 自定义图标编辑器](images/studio-lite/icon-editor.png)
 
-## 参考：相机菜单怎么走
+六槽设置定义的是**默认胶片**。已有 GRSlot 机身可能继续沿用之前保存的分配，只有执行对应的「恢复默认」才会采用新默认。
 
-以下说明对应 [README 中的菜单预览](../README.md#在相机上是什么样)，供了解已有 GRSlot 版本的行为：
+## 3. 保存项目，交给 Agent
 
-1. 在 **GRSlot 菜单**里先选六个 Golden 槽位中的一个，再选 **胶片库 / Film Library**。
-2. 进入品牌分类，选胶片。有多个拟合版本的胶片会继续显示版本列表。
-3. 在胶片操作页选 **胶片资料 / Film Info** 可看名称、可用署名和备注。选 **装入槽位 / Install to Slot** 会出现确认页，确认后才改变已有版本中该槽的胶片分配。
+点击右上角「保存项目」。页面显示本机 `project.json` 路径，点「复制路径」即可交给 Agent。重开页面会读回已保存版本。继续编辑后记得保存。
+
+![Studio Lite 显示已保存项目的 JSON 路径](images/studio-lite/saved-project.png)
+
+准备自己通过 Ricoh 官方渠道取得的**标准 GR III 原厂 2.10** 更新文件。解压后把 `fwdc239b.bin` 路径或它所在的文件夹路径交给能读取这些文件的本机 Agent。涉及机身时还要在相机上确认机型和当前版本，版本高于 2.10 时停止。[使用前提与风险](../references/usage-and-risk.md)
+
+可以把下面这段交给 Agent：
+
+> 请按 GRSlot 的 SKILL.md 校验我的 Studio Lite 项目。项目 JSON 在「本机路径」，标准 GR III 原厂 2.10 文件在「本机路径」。请列出勾选胶片、Golden 六槽、图标和备注，告诉我校验结果。
+
+Agent 可以在仓库根目录运行：
+
+```bash
+python3 -B studio-lite/check_project.py \
+  --project /absolute/project.json \
+  --firmware /absolute/official-folder
+```
+
+结果里的 `slots` 按槽位 1 到 6 排列，`selected` 包含胶片 UID、显示名、分类、备注和图标摘要。比对 `project_sha256` 可确认这次检查的是哪一份 JSON。`PASS_STUDIO_PROJECT_ONLY` 代表配置、资产与原厂输入检查通过。
+
+## 4. 可选：使用自己拟合的 LUT
+
+先用相同的原厂输入在 DARKSLIDE GR 拟合有权使用的 LUT，再让 Agent 按 [Darkslide 输入契约](../references/darkslide-import.md) 导入一个本地胶片库。
+
+```bash
+python3 -B studio-lite/app.py --library /absolute/prepared-library/library.json
+```
+
+保存后，除了 JSON 和原厂文件路径，还要让 Agent 使用同一份本地胶片库，校验命令加 `--library /absolute/prepared-library/library.json`。Studio 项目会校验库指纹，UID 本身无法还原自定义 LUT 的拟合参数。

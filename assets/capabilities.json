@@ -6,6 +6,8 @@
   "darkslide_project_import": true,
   "native_data_encoding": true,
   "curated_presets": true,
+  "studio_project_editing": true,
+  "studio_project_validation": true,
   "menu_source": true,
   "portable_firmware_build": false,
   "firmware_container_output": false,

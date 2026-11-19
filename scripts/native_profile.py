@@ -45,10 +45,13 @@ def _invalid(value):
     raise ValueError("Non-finite JSON constant: " + value)
 
 
-def read_json(path):
-    return json.loads(Path(path).read_text(encoding="utf-8"),
-                      object_pairs_hook=_pairs, parse_float=_finite,
+def parse_json(text):
+    return json.loads(text, object_pairs_hook=_pairs, parse_float=_finite,
                       parse_constant=_invalid)
+
+
+def read_json(path):
+    return parse_json(Path(path).read_text(encoding="utf-8"))
 
 
 def json_bytes(value):

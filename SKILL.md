@@ -29,6 +29,16 @@ python3 scripts/verify_assets.py
 
 ## 按任务读取和执行
 
+### 读取 Studio Lite 项目
+
+用户可用 Studio Lite 配置胶片、Golden 六槽、名称、分类、图标与备注。拿到保存的 `project.json` 和原厂 BIN（或其文件夹）后，在仓库根目录执行：
+
+```bash
+python3 -B studio-lite/check_project.py --project /absolute/project.json --firmware /absolute/official
+```
+
+使用自定义胶片库时，加 `--library /absolute/prepared-library/library.json`，必须与 Studio 保存项目时的库匹配。以回执中的 `selected`、`slots` 和 `project_sha256` 汇报本次配置。验证入口是只读的，`PASS_STUDIO_PROJECT_ONLY` 表示项目、胶片资产与原厂输入均通过准备阶段校验。当前产物为数据和回执。完整流程见 [使用说明](docs/guide.md)。
+
 ### 配置随附胶片
 
 用 [胶片清单](assets/library.json) 的 UID 选择预设，按 Slot 1 到 Slot 6 顺序指定默认胶片。每个槽位须指向已选 UID。这里创建的是本地数据项目。
