@@ -1,6 +1,6 @@
 # GRSlot
 
-为 Ricoh GR III 选胶片、配六槽。用本机浏览器里的 **Studio Lite** 从 51 款随附预设中选片、改图标、写备注，把保存的 JSON 交给 AI Agent 校验。自定义 LUT 可先在 DARKSLIDE GR 中拟合。
+为 Ricoh GR III 选胶片、配可自定义的、不同于机内原生槽位、但包含所有原生功能的影像控制六槽。用本机浏览器里的 **Studio Lite** 从 51 款随附预设中选片、改图标、写备注，把保存的 JSON 交给 AI Agent 校验。自定义 LUT 可先在 DARKSLIDE GR 中拟合。
 
 [简体中文使用说明](docs/guide.md) · [English user guide](docs/guide.en.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
 
