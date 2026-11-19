@@ -6,6 +6,10 @@
 
 ## 在相机上是什么样
 
+[简体中文总览 · 12 页](docs/images/menu-overview-zh-cn.png) · [English overview · 12 pages](docs/images/menu-overview-en.png)
+
+总览显示 FilmInfo 实机确认版的 83 款分类计数。本仓库随附 51 款预设。
+
 ![GRSlot 菜单示意：六个 Golden 槽位及六款胶片图标](docs/images/six-slots.png)
 
 *FilmInfo 20261118 实机确认版的菜单离线渲染。六槽使用公开胶片做示例，具体分配由用户配置。*
