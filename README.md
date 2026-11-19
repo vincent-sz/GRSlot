@@ -1,18 +1,20 @@
 # GRSlot
 
-为 Ricoh GR III 选胶片，配置独立于机内原生预设的 **Golden 影像控制六槽**。六槽可自定义，并保留原生影像控制的九项参数与 Grain（颗粒）。用本机浏览器里的 **Studio Lite** 从 51 款随附预设中选片、改图标、写备注，把保存的 JSON 交给 AI Agent 校验。自定义 LUT 可先在 DARKSLIDE GR 中拟合。
+**你的 GR III 里，最想常备哪六卷胶片？**
 
-[简体中文使用说明](docs/guide.md) · [English user guide](docs/guide.en.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
+从 51 款随附预设里挑一套，给喜欢的胶片换个图标，再记一句它适合什么光线。打开浏览器里的 **Studio Lite** 就能开始配。保存项目后，把 JSON 交给本机 AI Agent 校验。想加自己的 LUT，可以先在 DARKSLIDE GR 里拟合。
+
+[开始配我的六槽](docs/guide.md) · [English user guide](docs/guide.en.md) · [浏览 51 款胶片](assets/library.json) · [Agent 工作流程](SKILL.md)
+
+![GRSlot 菜单预览：六个 Golden 槽位及六款胶片图标](docs/images/six-slots.png)
+
+*FilmInfo 20261118 实机确认版的离线渲染。图中六槽为示例。*
 
 ## 在相机上是什么样
 
+**Golden 六槽**独立于机内原生预设，每槽保留原生影像控制的九项参数与 Grain（颗粒）。菜单总览里的 83 款是实机参考版的胶片数量。
+
 [简体中文总览 · 12 页](docs/images/menu-overview-zh-cn.png) · [English overview · 12 pages](docs/images/menu-overview-en.png)
-
-总览显示 FilmInfo 实机确认版的 83 款分类计数。本仓库随附 51 款预设。
-
-![GRSlot 菜单示意：六个 Golden 槽位及六款胶片图标](docs/images/six-slots.png)
-
-*FilmInfo 20261118 实机确认版的菜单离线渲染。六槽使用公开胶片做示例，具体分配由用户配置。*
 
 | 胶片库入口 | 胶片操作 | 胶片资料 |
 | --- | --- | --- |
