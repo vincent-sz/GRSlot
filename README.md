@@ -1,5 +1,9 @@
 # GRSlot
 
+![作者实机展示：理光 GR III 的影像控制菜单与胶片图标](docs/images/author-camera-demo.jpeg)
+
+*作者实机展示。*
+
 GRSlot 是一个为理光 GR III 新增六个独立影像控制槽位的项目。这六个 **Golden 槽位**独立于机内原生槽位，每槽都能自定义胶片，使用原生影像控制的九项参数，并添加原厂颗粒（Grain）。
 
 你可以在 DARKSLIDE GR 里拟合自己的 LUT，把它作为 Golden 槽位的胶片，再用机内原生参数微调，做出自己想要的相机直出（SOOC）效果。仓库随附 51 款胶片预设。你可以先用本机浏览器里的 **Studio Lite** 选片、改图标、写备注，保存为 JSON，再交给本机 Agent 校验。通用固件构建尚未接通。
