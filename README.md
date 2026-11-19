@@ -1,14 +1,24 @@
 # GRSlot
 
-![作者实机展示：理光 GR III 的影像控制菜单与胶片图标](docs/images/author-camera-demo.jpeg)
-
-*作者实机展示。*
-
 GRSlot 是一个为理光 GR III 新增六个独立影像控制槽位的项目。这六个 **Golden 槽位**独立于机内原生槽位，每槽都能自定义胶片，使用原生影像控制的九项参数，并添加原厂颗粒（Grain）。
+
+导入的胶片预设可用于拍摄时的实时成像，也能在机内处理 RAW 时重新选用。Golden 槽位里的彩色预设也能使用原机黑白滤镜的「颗粒感」（Grain）。回放照片时，按 DISP 切到详细信息页，可以查看拍摄或机内 RAW 处理所用的胶片预设，以及影像控制参数和颗粒设置。
 
 你可以在 DARKSLIDE GR 里拟合自己的 LUT，把它作为 Golden 槽位的胶片，再用机内原生参数微调，做出自己想要的相机直出（SOOC）效果。仓库随附 51 款胶片预设。你可以先用本机浏览器里的 **Studio Lite** 选片、改图标、写备注，保存为 JSON，再交给本机 Agent 校验。通用固件构建尚未接通。
 
 [简体中文使用说明](docs/guide.md) · [English user guide](docs/guide.en.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
+
+## 作者实机展示
+
+| 新增影像控制槽位 | 机内 RAW 处理 | 彩色预设的原厂颗粒 |
+| --- | --- | --- |
+| ![001：GRSlot 新增影像控制槽位](docs/images/camera-demo/001.jpg) | ![002：机内 RAW 处理的 GRSlot 槽位](docs/images/camera-demo/002.jpg) | ![003：彩色预设的颗粒感设置](docs/images/camera-demo/003.jpg) |
+| 001 · 在机身「影像控制」中选择 GRSlot 新增的槽位。 | 002 · 在机内处理 RAW 时，也能选择 GRSlot 槽位里的胶片预设。 | 003 · 彩色预设也能使用原厂「颗粒感」，图中设为 1 档。 |
+
+| DISP 回放 · 拍摄时使用的预设 | DISP 回放 · 机内后期使用的预设 |
+| --- | --- |
+| ![004：DISP 回放显示拍摄时使用的 Vision3 5207](docs/images/camera-demo/004.jpg) | ![005：DISP 回放显示机内 RAW 处理时使用的 Ultramax 400](docs/images/camera-demo/005.jpg) |
+| 004 · 回放详细信息显示拍摄时使用的 Vision3 5207。 | 005 · 回放机内 RAW 处理后的照片，详细信息显示所用的 Ultramax 400，颗粒为 1 档。 |
 
 ![GRSlot 菜单预览：六个 Golden 槽位及六款胶片图标](docs/images/six-slots.png)
 
