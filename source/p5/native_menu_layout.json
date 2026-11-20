@@ -1,0 +1,260 @@
+[
+  {
+    "address": "0x5316fcec",
+    "before": "bc0301e3",
+    "after": "200401e3",
+    "role": "TopMenuController allocation: 0x13bc to 0x1420"
+  },
+  {
+    "address": "0x53198b54",
+    "before": "e130a0e3",
+    "after": "e630a0e3",
+    "role": "category row-ID index stride 0xe1 to 0xe6 words"
+  },
+  {
+    "address": "0x53198b60",
+    "before": "e44394e5",
+    "after": "ec4394e5",
+    "role": "runtime row-ID base +0x3e4 to +0x3ec"
+  },
+  {
+    "address": "0x531991f0",
+    "before": "e13fa0e3",
+    "after": "e63fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x5319922c",
+    "before": "e16f86e2",
+    "after": "e66f86e2",
+    "role": "group iterator stride"
+  },
+  {
+    "address": "0x5319923c",
+    "before": "5c311615",
+    "after": "70311615",
+    "role": "previous group callback pointer -0x15c to -0x170"
+  },
+  {
+    "address": "0x53199240",
+    "before": "5c311605",
+    "after": "70311605",
+    "role": "previous group callback pointer -0x15c to -0x170"
+  },
+  {
+    "address": "0x531995d4",
+    "before": "e14f84e2",
+    "after": "e64f84e2",
+    "role": "group iterator stride"
+  },
+  {
+    "address": "0x531995e4",
+    "before": "5c311415",
+    "after": "70311415",
+    "role": "previous group callback pointer -0x15c to -0x170"
+  },
+  {
+    "address": "0x531995e8",
+    "before": "5c311405",
+    "after": "70311405",
+    "role": "previous group callback pointer -0x15c to -0x170"
+  },
+  {
+    "address": "0x53199630",
+    "before": "3c4084e2",
+    "after": "8c4084e2",
+    "role": "last category callback flags +0x103c to +0x108c"
+  },
+  {
+    "address": "0x53199638",
+    "before": "e14f44e2",
+    "after": "e64f44e2",
+    "role": "reverse group iterator stride"
+  },
+  {
+    "address": "0x53199648",
+    "before": "80339415",
+    "after": "94339415",
+    "role": "reverse virtual callback load after decrement +0x380 to +0x394"
+  },
+  {
+    "address": "0x5319964c",
+    "before": "80339405",
+    "after": "94339405",
+    "role": "reverse direct callback load after decrement +0x380 to +0x394"
+  },
+  {
+    "address": "0x531996a8",
+    "before": "c20100e3",
+    "after": "cc0100e3",
+    "role": "category metadata stride in halfwords"
+  },
+  {
+    "address": "0x5319975c",
+    "before": "e12fa0e3",
+    "after": "e62fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x53199864",
+    "before": "e18f88e2",
+    "after": "e68f88e2",
+    "role": "group iterator stride"
+  },
+  {
+    "address": "0x531998f0",
+    "before": "e11fa0e3",
+    "after": "e61fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x53199924",
+    "before": "e11fa0e3",
+    "after": "e61fa0e3",
+    "role": "page-tab refresh category group stride"
+  },
+  {
+    "address": "0x53199a20",
+    "before": "e12fa0e3",
+    "after": "e62fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x53199a98",
+    "before": "e12fa0e3",
+    "after": "e62fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x53199bac",
+    "before": "e14fa0e3",
+    "after": "e64fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x53199cf0",
+    "before": "e14fa0e3",
+    "after": "e64fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x53199d08",
+    "before": "b03594e5",
+    "after": "c43594e5",
+    "role": "next group callback flags +0x5b0 to +0x5c4"
+  },
+  {
+    "address": "0x53199d0c",
+    "before": "e14f84e2",
+    "after": "e64f84e2",
+    "role": "forward group iterator stride"
+  },
+  {
+    "address": "0x53199dc8",
+    "before": "e14fa0e3",
+    "after": "e64fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x53199ddc",
+    "before": "583114e5",
+    "after": "6c3114e5",
+    "role": "previous group callback flags -0x158 to -0x16c"
+  },
+  {
+    "address": "0x53199de0",
+    "before": "e14f44e2",
+    "after": "e64f44e2",
+    "role": "reverse group iterator stride"
+  },
+  {
+    "address": "0x53199eb8",
+    "before": "e11fa0e3",
+    "after": "e61fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x53199f80",
+    "before": "e13fa0e3",
+    "after": "e63fa0e3",
+    "role": "page navigation category group stride"
+  },
+  {
+    "address": "0x5319a114",
+    "before": "e13fa0e3",
+    "after": "e63fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x5319a144",
+    "before": "e11fa0e3",
+    "after": "e61fa0e3",
+    "role": "group stride constant"
+  },
+  {
+    "address": "0x5319a800",
+    "before": "e12fa0e3",
+    "after": "e62fa0e3",
+    "role": "source/runtime group stride"
+  },
+  {
+    "address": "0x5319a820",
+    "before": "c22100e3",
+    "after": "cc2100e3",
+    "role": "category metadata stride in halfwords"
+  },
+  {
+    "address": "0x5319a950",
+    "before": "6fa084e2",
+    "after": "71a084e2",
+    "role": "source row-ID array base +0x1bc to +0x1c4"
+  },
+  {
+    "address": "0x5319a970",
+    "before": "953f83e2",
+    "after": "983f83e2",
+    "role": "source predicate array +0x254 to +0x260"
+  },
+  {
+    "address": "0x5319a988",
+    "before": "e1c0a0e3",
+    "after": "e6c0a0e3",
+    "role": "category row-ID index stride 0xe1 to 0xe6 words"
+  },
+  {
+    "address": "0x5319a998",
+    "before": "4a2085e2",
+    "after": "4b2085e2",
+    "role": "runtime visibility row slot +0x4a to +0x4b"
+  },
+  {
+    "address": "0x5319a99c",
+    "before": "95ef86e2",
+    "after": "98ef86e2",
+    "role": "source stored visibility pair +0x254 to +0x260"
+  },
+  {
+    "address": "0x5319a9c8",
+    "before": "e4338ce5",
+    "after": "ec338ce5",
+    "role": "runtime row-ID array base +0x3e4 to +0x3ec"
+  },
+  {
+    "address": "0x5319a9cc",
+    "before": "8b2f82e2",
+    "after": "8c2f82e2",
+    "role": "runtime visibility base +0x22c to +0x230"
+  },
+  {
+    "address": "0x5319aa4c",
+    "before": "e13f81e2",
+    "after": "e63f81e2",
+    "role": "category group stride"
+  },
+  {
+    "address": "0x5319ab54",
+    "before": "942101e3",
+    "after": "f82101e3",
+    "role": "memset five category groups: 0x1194 to 0x11f8"
+  }
+]

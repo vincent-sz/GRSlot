@@ -35,6 +35,11 @@ int p4_load(void){
 }
 U p4_assignment(U slot){const struct film*f=assigned(slot);return f?f->id:0;}
 U p4_film(U slot){return (U)assigned(slot);}
+const struct film* p4_native_film(U slot,const void* basis){
+ if(slot>=6)return 0;
+ const struct film*initial=lookup(defaults[slot]);
+ return initial&&initial->basis==basis?assigned(slot):0;
+}
 U p4_lookup(U id){return(U)lookup(id);}
 U p4_count(void){return COUNT;}
 /* Write the inactive copy, read it back, then atomically publish one slot.

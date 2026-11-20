@@ -28,7 +28,11 @@ Format: public UID | display name | recorded export recipe | input CUBE SHA-256
 
 Spectral Film LUT — Jan Lohse; intermediate CUBEs identified in headers as Alcedo exports.
 Upstreams: https://github.com/JanLohse/spectral_film_lut and https://github.com/zidage/AlcedoStudio
-The exact upstream generator revision and release of the intermediate pack are unrecorded.
+Intermediate package: Alcedo spectral_film_lut 2026.10.01.1.
+Package inventory SHA-256: 8843fa0ca4fc9d18e15155802b54223238a74740ff1fde639bcd72b7d9185ac0.
+All 35 original CUBE hashes below match the installed package. The included MIT
+license matches licenses/SPECTRAL_FILM_LUT_LICENSE.txt byte for byte.
+The package receipt does not record the upstream generator commit.
 Processing: ACEScc LMT to display-referred sRGB via OpenColorIO 2.6.0, ACES 2.0 SDR
 100 nits Rec.709, trilinear 65^3 bake, six decimals; then Darkslide fitting and native encoding.
 Format: public UID | display name | Alcedo input filename | original SHA-256 | fitted-input SHA-256 | export header settings

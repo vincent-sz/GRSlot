@@ -10,6 +10,7 @@ private/
 *.o
 *.su
 fwdc239b.bin
+fwdc239b.candidate.bin
 *RTOS*.bin
 *.cube
 .local-data/

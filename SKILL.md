@@ -1,16 +1,18 @@
 ---
 name: ricoh-gr3-film-firmware
-description: 准备标准 GR III 2.10 的 GRSlot 分发数据，校验原厂输入、导入 Darkslide 已拟合 profile、编码原生颜色及修改菜单源码。用于通用版胶片导入和分发准备。交付范围为胶片数据准备和验证，不生成固件。
+description: 用标准 GR III 原厂 2.10 和随附开源预设在本机生成 GRSlot 固件候选，也可准备和验证本地胶片数据。
 metadata:
   license: GPL-2.0-only
-  compatibility: macOS、Python 3.9+，数据准备使用标准库。完整 ARM 平台框架尚缺。
+  compatibility: macOS、Python 3.9+；构建需要 Apple Clang 和 Unicorn 2.1.4，数据准备使用标准库。
 ---
 
 # GRSlot 通用分发准备
 
 ## 先读能力状态
 
-读取 [capabilities.json](assets/capabilities.json)。当前支持输入校验、profile 导入、原生编码、51 款资源和菜单源码。`portable_firmware_build` 与 `firmware_container_output` 均为 false。交付胶片数据、参考源码及准备回执。固件生成、写卡和刷机不在本方法范围内。
+读取 [capabilities.json](assets/capabilities.json)。当 `offline_build_checks` 为 true 时可以运行离线构建检查。当 `firmware_candidate_output` 为 true 时，检查通过后保存固件候选。当前 `firmware_container_output` 为 false，升级输出仍待发布验收。
+
+首次使用或用户问能否装进相机时，先走 [AGENTS.md](AGENTS.md) 的新手流程。用随附的开源胶片预设跑通一次离线构建检查，再处理自定义胶片。Studio Lite 的配置和保存无需原厂输入，离线构建检查需要原厂输入。
 
 唯一支持标准 GR III 原厂 2.10，完整 SHA-256 为
 
@@ -28,6 +30,16 @@ python3 scripts/verify_assets.py
 校验失败即停止使用该输入。若评估相机兼容性，请使用者另行确认机身为标准 GR III 并运行原厂 2.10。高于 2.10 时停止，不尝试降级。参见 [使用前提与风险](references/usage-and-risk.md)。
 
 ## 按任务读取和执行
+
+### 构建本机固件候选
+
+首次用随附胶片和默认六槽，在仓库根目录执行：
+
+```bash
+python3 -B studio-lite/build_firmware.py --bundled --firmware "/absolute/fwdc239b.bin" --output "/absolute/new-output"
+```
+
+已有随附胶片的 Studio Lite 项目时，用 `--project "/absolute/project.json"` 替换 `--bundled`。输出目录必须尚不存在，父目录需已存在。回执 `PASS_DESKTOP_ARM_CONTAINER` 表示 `fwdc239b.candidate.bin` 已生成并通过电脑检查。升级输出仍为 `BLOCKED_PENDING_RELEASE_VALIDATION`。
 
 ### 读取 Studio Lite 项目
 
@@ -74,7 +86,7 @@ python3 scripts/import_darkslide.py \
 
 ### 修改菜单源码
 
-读取 [菜单自定义](references/menu-customization.md)。工作副本修改 `source/p5/` 和相应资源、注册表、消费者及测试。当前生成头文件通过 `#error` 明示平台绑定缺口。
+读取 [菜单自定义](references/menu-customization.md)。工作副本修改 `source/p5/` 和相应资源、注册表、消费者及测试。构建器在临时目录根据本次胶片库和槽位生成三个头文件。
 
 保全六槽独立九项参数与 Grain。Install、Restore Current、Restore All 只改 Assignment。保全完整导航、确认页、原生标题图标、活动面板检查和 Fn/ISO/ADJ 隔离。Change Film 直接进入六槽，品牌多版本采用品牌 → 胶片 → 版本。Favorites 为构建期配置。显示身份按当前 Slot Assignment 处理。
 
@@ -82,8 +94,8 @@ python3 scripts/import_darkslide.py \
 
 以 [library.json](assets/library.json) 为准，当前 51 款，包括 16 款 Spektrafilm 和 35 款 Spectral Film LUT。默认 UID 为 18、12、14、9、5、11，新增从 UID85 追加。
 
-分发按清单的许可逐款选取文件。公开包以当前胶片清单为准。旧 append 区还含排除数据及回退指针，清理条件见构建缺口。来源与许可见 [SOURCES.md](SOURCES.md) 和 [第三方声明](THIRD_PARTY_NOTICES.md)。
+分发按清单的许可逐款选取文件。公开候选从本次用户原厂输入构建。来源与许可见 [SOURCES.md](SOURCES.md) 和 [第三方声明](THIRD_PARTY_NOTICES.md)。
 
 ## 验证与交付
 
-按 [验证要求](references/validation.md) 检查实际改动。交付本地胶片清单、源码或数据及验证回执，写明已验证范围。Windows/Linux 尚待验证。
+按 [验证要求](references/validation.md) 检查实际改动。构建成功时给出固件候选及回执路径和实际验证范围。Windows/Linux 尚待验证。

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-only
-"""Decode and validate GR III 2.10 firmware containers."""
+"""Decode, validate and rebuild GR III 2.10 firmware containers."""
 from pathlib import Path
 import struct, hashlib, json, argparse, os, datetime
 FACTORY = 'd6a3c9c288d784080e7b283222ecdd8752adfeed6faa36dab44f73115354bfd4'
@@ -113,3 +113,44 @@ def blocks(d):
             break
         pos = end
     return out
+
+
+def repack_official_rtos(factory, rtos):
+    """Replace only the RTOS block of the exact supported stock container."""
+    need(sha(factory) == FACTORY, 'Only the exact official GR III 2.10 input is supported')
+    original, frames = verify_package(factory)
+    need(sha(original) == DECODED, 'Unexpected decoded factory input')
+    header, start, end, _, _ = blocks(original)['RTOS']
+    need(len(rtos) >= end - start and len(rtos) % 32 == 0, 'Invalid RTOS size or alignment')
+    growth = len(rtos) - (end - start)
+    candidate = bytearray(original[:start] + rtos + original[end:])
+    struct.pack_into('<I', candidate, header + 12, len(rtos))
+    candidate = checksum(candidate)
+    if candidate == original:
+        return factory
+
+    # Reuse the original compressed frames when both their contents and
+    # possible back-reference history match at the new position.
+    out = bytearray(factory[:128])
+    for begin, encoded_end, low, high in frames:
+        mapped_low = low + (growth if low >= end else 0)
+        mapped_high = high + (growth if high >= end else 0)
+        raw = candidate[mapped_low:mapped_high]
+        if (raw == original[low:high]
+                and candidate[max(0, mapped_low - 8191):mapped_low] == original[max(0, low - 8191):low]):
+            out.extend(factory[begin:encoded_end])
+            continue
+        for offset in range(0, len(raw), 32752):
+            chunk = raw[offset:offset + 32752]
+            out.extend(struct.pack('>H', 0x8000 | len(chunk)))
+            out.extend(chunk)
+
+    compressed = len(out) - 128
+    out.extend(b'\0\0')
+    out.extend(bytes(-len(out) % 4))
+    footer = bytearray(factory[-24:])
+    struct.pack_into('<II', footer, 12, compressed, len(candidate))
+    out.extend(footer)
+    package = checksum(out)
+    need(verify_package(package)[0] == candidate, 'Rebuilt container failed readback')
+    return package

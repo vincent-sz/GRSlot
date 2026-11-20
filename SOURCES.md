@@ -25,7 +25,7 @@ Fraction CSP 变换与实际整数系数核验来自既有 `GRSlot_V3Native_P2_2
 
 原始数据作者 Andrea Volpato，项目为 [Spektrafilm](https://github.com/andreavolpato/spektrafilm)。Darkslide 的导出、白点调整及拟合由 LiorMoment 进行。数据及其直接派生结果按 CC BY-SA 4.0，许可和原附加说明完整保留。
 
-公开源码包包含 16 款 Spektrafilm 和 35 款 Spectral Film LUT 的相机拟合预设。Spektrafilm 的 4 款早期拟合以 `(Original Fit)` 区分同名版本。Spectral Film LUT 由 Jan Lohse 开发，上游 MIT 许可随附。35 款实际经 Alcedo 的 ACEScc CUBE 导出，再转换为显示参考 sRGB、由 Darkslide 拟合。逐款导出标识、设置和阶段哈希见 [派生记录](CHANGELOG.txt)。现有档案未锁定 Alcedo 导出包发布版本和 Spectral 生成器提交，须以实际导出包授权材料完成公开复核。[Spectral Film LUT 上游仓库](https://github.com/JanLohse/spectral_film_lut)
+公开源码包包含 16 款 Spektrafilm 和 35 款 Spectral Film LUT 的相机拟合预设。Spektrafilm 的 4 款早期拟合以 `(Original Fit)` 区分同名版本。Spectral Film LUT 由 Jan Lohse 开发。35 款实际经 Alcedo 的 ACEScc CUBE 导出，再转换为显示参考 sRGB、由 Darkslide 拟合。Alcedo 的 `spectral_film_lut` 导出包版本为 `2026.10.01.1`。该包的 35 份原始 CUBE 均与 [派生记录](CHANGELOG.txt) 的 SHA-256 一致，包内 MIT 许可与 [仓库随附许可](licenses/SPECTRAL_FILM_LUT_LICENSE.txt) 逐字节一致。Alcedo 打包回执未记载 Spectral 生成器的提交。[Spectral Film LUT 上游仓库](https://github.com/JanLohse/spectral_film_lut)
 
 ## 图标
 
@@ -33,7 +33,13 @@ Fraction CSP 变换与实际整数系数核验来自既有 `GRSlot_V3Native_P2_2
 
 ## 容器工具
 
-`scripts/container_codec.py` 采用成功构建链中已使用的 `GRSlot_V3_P4B_Fix2_20261102-0441/PATCH_SOURCE/support/firmware.py` 的解码与验证部分。未带入旧槽位替换生成入口及其 HNCS 数据资产。
+`scripts/container_codec.py` 采用成功构建链中已使用的 `GRSlot_V3_P4B_Fix2_20261102-0441/PATCH_SOURCE/support/firmware.py` 的解码、验证和压缩帧复用逻辑。RTOS 替换范围由用户原厂容器的区块表确定。
+
+`scripts/arm_link.py` 沿用 P4B `support/link_c.py` 及 FilmInfo 构建使用的 ARM ELF 重定位子集。`scripts/native_registry.py` 使用本次输入的原厂 RTOS 提供的 basis、aux 和色调记录，搭配经校验的公开胶片参数生成色彩数据。两者均为构建组件。
+
+## DNG 与回放
+
+`source/p5/raw_hooks.s` 的 DNG 标记读写沿用项目已有的 `raw-path-a-identity-v1` 方案，扩展至六个槽位。`source/p5/playback_grain.s` 沿用 `playback-six-slot-grain-v1` 的 Grain 读取和显示路径。公开构建使用这两份源码和用户提供的原厂 GR III 2.10 固件，并核对待修改位置的原厂内容。
 
 ## 上游 MIT 来源
 

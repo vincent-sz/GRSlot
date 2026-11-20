@@ -4,7 +4,7 @@
 
 GRSlot Studio Lite 在本机浏览器里管理胶片库和 Golden 六槽。你可以选用随附的 51 款预设，改名称、分类、图标和备注，然后把保存的项目 JSON 交给本机 Agent 校验。
 
-**现在可以完成配置、保存和校验。** 通用固件构建尚未接通。当前流程交付项目 JSON 和验证结果。[当前构建状态](../references/build-status.md)
+**先用随附开源预设生成一次固件候选，再导入自己的预设。** 首次构建请参见[仓库首页](../README.md#第一次使用)。下文介绍 Studio Lite 的编辑、保存和独立校验。[当前构建状态](../references/build-status.md)
 
 ## 1. 看相机菜单和胶片图标
 
@@ -57,6 +57,8 @@ python3 -B studio-lite/check_project.py \
 结果里的 `slots` 按槽位 1 到 6 排列，`selected` 包含胶片 UID、显示名、分类、备注和图标摘要。比对 `project_sha256` 可确认这次检查的是哪一份 JSON。`PASS_STUDIO_PROJECT_ONLY` 代表配置、资产与原厂输入检查通过。
 
 ## 4. 可选：使用自己拟合的 LUT
+
+第一次请先用随仓库附带的开源胶片预设跑通选片、六槽分配和保存。需要完整桌面校验时，也先用这份项目校验，再回来导入自己的预设。
 
 先用相同的原厂输入在 DARKSLIDE GR 拟合有权使用的 LUT，再让 Agent 按 [Darkslide 输入契约](../references/darkslide-import.md) 导入一个本地胶片库。
 

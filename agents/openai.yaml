@@ -1,7 +1,7 @@
 interface:
   display_name: "ricoh-gr3-film-firmware"
-  short_description: "GR III 胶片准备与验证"
-  default_prompt: "使用 $ricoh-gr3-film-firmware，校验本机标准 GR III 2.10 原厂输入，并准备胶片数据与验证回执。"
+  short_description: "GR III 本机固件候选构建与胶片准备"
+  default_prompt: "请按仓库的 AGENTS.md 帮我把 GRSlot 装到固件里。第一次先用仓库随附的开源预设。请用我提供的原厂 GR III 2.10 固件在本机生成候选，并给我文件和回执的路径。"
 
 policy:
   allow_implicit_invocation: true

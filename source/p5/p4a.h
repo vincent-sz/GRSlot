@@ -16,6 +16,7 @@ struct assignments {
  U ids[6];
  U refresh_lock,next;
  struct {U owner,identity;} seen[2];
+ U common_resource_busy,menu_owner_busy,menu_owner_fallback,parameter_busy;
 };
 #define ASSIGN ((volatile struct assignments*)0x55804384u)
 _Static_assert(sizeof(struct journal)==32,"record layout");

@@ -1,10 +1,46 @@
 # GRSlot
 
-GRSlot 是一个为理光 GR III 新增六个独立影像控制槽位的项目。这六个 **Golden 槽位**独立于机内原生槽位，每槽都能自定义胶片，使用原生影像控制的九项参数，并添加原厂颗粒（Grain）。
+GRSlot 为理光 GR III 新增六个独立影像控制槽位。这个版本能在 Mac 上用原厂 2.10 和随附预设生成固件候选。候选通过电脑检查后仍待实机与发布验收，请先保留文件用于验证。
+
+## 第一次使用
+
+先用仓库随附的开源预设跑通构建，再尝试导入自己的预设。首次无需手动选片，构建器会用 Studio Lite 保存一份默认项目。
+
+1. 把 GitHub 下载的 GRSlot 文件夹在 WorkBuddy 或其他能操作本机文件和终端的 Agent 里打开。
+2. 找到标准 **GR III 原厂 2.10** 的 `fwdc239b.bin`，把文件路径告诉 Agent。机型和版本请在相机上确认。
+3. 发下面这段提示。构建成功时，Agent 应给出 `fwdc239b.candidate.bin` 和 `verification.json` 的路径。
+
+> 请帮我把 GRSlot 装到固件里。请读取仓库的 README.md 和 AGENTS.md。我第一次用，请直接用仓库随附的开源预设。原厂 GR III 2.10 固件在［把文件路径贴在这里］。请在本机生成固件候选，把文件和检查回执的路径发给我。
+
+离线构建依赖 macOS、Python 3.9+、Apple Command Line Tools，以及当前 Python 环境里的 Unicorn 2.1.4。Agent 可以先查有没有装好。如果只有 Unicorn 缺失，可以在仓库目录建立一个单独的 Python 环境：
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install unicorn==2.1.4
+```
+
+如果 WorkBuddy 提示默认 Python 找不到 Unicorn，把已安装 Unicorn 的 Python 路径发给它，让它用该解释器继续运行。WorkBuddy 实跑使用的是 Python 3.12.13 和 Unicorn 2.1.4。
+
+也可以在仓库目录手动构建。用刚创建的环境时，把下面的 `python3` 换成 `.venv/bin/python`：
+
+```bash
+python3 -B studio-lite/build_firmware.py --bundled \
+  --firmware "/你的路径/fwdc239b.bin" --output "$HOME/Desktop/GRSlot-首次构建"
+```
+
+首次成功后，双击 `studio-lite/启动 Studio.command`，在 Studio Lite 里用随附胶片调整六槽并保存项目。构建时把 `--bundled` 换成 `--project "已保存项目的路径"`。自定义预设和图文覆盖目前可在 Studio Lite 准备和校验，离线构建入口支持随附胶片和六槽分配。
+
+每次构建在仓库外选一个新输出目录。里面有固件候选、SHA-256 校验值、Studio 项目和检查回执。`PASS_DESKTOP_ARM_CONTAINER` 表示候选通过电脑检查，`BLOCKED_PENDING_RELEASE_VALIDATION` 表示它还未获准用于升级相机。
+
+公开候选的回放记录 Golden 槽位和颗粒。重新给槽位分配胶片后，旧照片的槽位图标会按当前分配显示。
+
+## 实机版的功能
+
+这六个 **Golden 槽位**独立于机内原生槽位，每槽都能自定义胶片，使用原生影像控制的九项参数，并添加原厂颗粒（Grain）。
 
 导入的胶片预设可用于拍摄时的实时成像，也能在机内处理 RAW 时重新选用。Golden 槽位里的彩色预设也能使用原机黑白滤镜的「颗粒感」（Grain）。回放照片时，按 DISP 切到详细信息页，可以查看拍摄或机内 RAW 处理所用的胶片预设，以及影像控制参数和颗粒设置。
 
-你可以在 DARKSLIDE GR 里拟合自己的 LUT，把它作为 Golden 槽位的胶片，再用机内原生参数微调，做出自己想要的相机直出（SOOC）效果。仓库随附 51 款胶片预设。你可以先用本机浏览器里的 **Studio Lite** 选片、改图标、写备注，保存为 JSON，再交给本机 Agent 校验。通用固件构建尚未接通。
+你可以在 DARKSLIDE GR 里拟合自己的 LUT，把它作为 Golden 槽位的胶片，再用机内原生参数微调，做出自己想要的相机直出（SOOC）效果。
 
 [简体中文使用说明](docs/guide.md) · [English user guide](docs/guide.en.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
 
@@ -53,12 +89,9 @@ GRSlot 是一个为理光 GR III 新增六个独立影像控制槽位的项目�
 
 ![Studio Lite 的胶片库和 Golden 六槽](docs/images/studio-lite/six-slots.png)
 
-1. 在 macOS 上双击 `studio-lite/启动 Studio.command`，或在仓库根目录运行 `python3 -B studio-lite/app.py`。
-2. 选片、排六槽、编辑资料，点击右上角**保存项目**。复制页面显示的 JSON 路径。
-
-### **3. 把 JSON 路径和自己取得的标准 GR III 原厂 2.10 固件路径交给同一台电脑上的 Agent。使用自定义胶片库时，附上对应的本地 `library.json` 路径。**
-
-**目前可完成 Studio 配置和 Agent 校验。** 通用固件构建尚未就绪，仓库交付胶片数据、验证工具和菜单参考源码。[使用说明](docs/guide.md) · [English user guide](docs/guide.en.md)
+1. 在 macOS 上准备 Python 3.9 或以上，双击 `studio-lite/启动 Studio.command`，或在仓库根目录运行 `python3 -B studio-lite/app.py --port 0`。这条命令会自动选择空闲端口。浏览器未自动打开时，打开终端中显示的网址。
+2. 在中间的胶片列表勾选要用的胶片，在右侧设置六槽的默认胶片。同一款可以放多个槽。点击右上角「保存项目」。
+3. 如果需要校验，点「复制路径」，把项目 JSON 路径和自己取得的标准 GR III 原厂 2.10 固件路径交给能读到这些文件的本机 Agent。使用自定义库时，附上保存时对应的 `library.json`。校验通过后，交付的是配置和文件的校验结果。[使用说明](docs/guide.md) · [English user guide](docs/guide.en.md)
 
 ## 使用范围与免责声明
 
@@ -66,7 +99,7 @@ GRSlot 是独立社区项目，与理光无隶属或授权关系。原厂固件�
 
 ### 固件版本限制
 
-**GRSlot 的实机验证仅覆盖以官方 2.10 为底座的标准 GR III。** 首次安装前，机身必须正常运行官方 2.10。请在相机上核对机型和版本，并校验本机原厂更新文件。
+**GRSlot 的实机验证仅覆盖以官方 2.10 为底座的标准 GR III。** 评估上机兼容性时，请在机身上核对机型和当前固件版本，再单独校验电脑上的原厂更新文件。
 
 - **机身已是官方 2.10**：这是当前唯一验证过的基底。文件校验通过只代表输入匹配。
 - **机身是其他官方版本**：请勿直接叠加使用。高于 2.10 时停止，不要尝试降级。理光明确说明，安装 2.21 后无法退回旧版本。[理光 GR III 固件说明](https://www.ricoh-imaging.co.jp/english/support/digital/gr3_s.html)
@@ -76,7 +109,7 @@ GRSlot 是独立社区项目，与理光无隶属或授权关系。原厂固件�
 
 **GR IIIx（GR3X）和 GR IV（GR4）均未在本项目中进行实机验证。** 想研究移植的用户，可以让本机 Agent 读取本仓库和自己取得的对应机型原厂固件，先做只读的兼容性分析。每款机型都需独立适配并验证，当前 GR III 的工具不能直接用于生成这些机型的固件。
 
-本仓库提供方法、参考源码和可验证的准备流程。Agent 可以据此研究适配，是否能生成可用固件取决于目标机型的适配、构建与实机验证。如果你想用图形界面一键生成固件，请选用已明确支持你机型和版本的其他项目。
+仓库的本机构建器仅接受标准 GR III 原厂 2.10。其他机型的研究和适配需要各自的机身验证。
 
 ### 风险与免责声明
 

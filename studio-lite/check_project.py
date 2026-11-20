@@ -13,7 +13,7 @@ from native_profile import json_bytes, parse_json, sha256
 from verify_assets import verify_assets
 
 
-def check_project(project_path, firmware, library_path=DEFAULT_LIBRARY):
+def load_checked_project(project_path, firmware, library_path=DEFAULT_LIBRARY):
     studio = Studio(library_path, project_path.parent)
     raw = project_path.read_bytes()
     project = studio.validate(parse_json(raw.decode("utf-8")))
@@ -39,10 +39,16 @@ def check_project(project_path, firmware, library_path=DEFAULT_LIBRARY):
             icon_sha256=sha256(base64.b64decode(overrides["icon"].split(",", 1)[1]) if "icon" in overrides
                                else studio.icons[uid].read_bytes()),
         ))
-    return dict(status="PASS_STUDIO_PROJECT_ONLY", project_sha256=sha256(raw),
-                library_id=project["library_id"], revision=project["revision"],
-                selected=selected, slots=project["slots"], asset_validation=assets["status"],
-                official=official, firmware_generated=False)
+    receipt = dict(status="PASS_STUDIO_PROJECT_ONLY", project_sha256=sha256(raw),
+                   library_id=project["library_id"], revision=project["revision"],
+                   selected=selected, slots=project["slots"], asset_validation=assets["status"],
+                   official=official, firmware_generated=False)
+    return project, receipt
+
+
+def check_project(project_path, firmware, library_path=DEFAULT_LIBRARY):
+    _, receipt = load_checked_project(project_path, firmware, library_path)
+    return receipt
 
 
 def main():

@@ -4,7 +4,7 @@
 
 GRSlot Studio Lite runs in your local browser. Pick from 51 included film presets, assign the six Golden Slots, edit film names, categories, icons and notes, then hand the saved project JSON to an agent running on the same computer.
 
-**Project editing, saving and validation are available now.** A portable firmware build is still pending. This workflow delivers a project JSON and validation results. [Build status](../references/build-status.md)
+**Build a local firmware candidate with the bundled open-source presets before importing your own.** For your first run, follow the [repository quick start](../README.md#第一次使用). The candidate is pending camera testing and approval for upgrading. This guide covers editing, saving and validating a Studio Lite project. [Build status](../references/build-status.md)
 
 ## 1. See the camera menus and film icons
 
@@ -57,6 +57,8 @@ python3 -B studio-lite/check_project.py \
 The result lists `slots` in order from 1 to 6. The `selected` list includes film UIDs, display names, categories, notes and icon hashes. Use `project_sha256` to identify the checked JSON. `PASS_STUDIO_PROJECT_ONLY` means the project, film assets and official input passed the preparation checks.
 
 ## 4. Optional: use your own fitted LUT
+
+On your first run, use the included open-source film presets to select films, assign the six slots, and save a project. If you want to run the full desktop validation, use that project first. Import your own presets once that workflow works on your computer.
 
 Use the same official input to fit a LUT you have permission to use in DARKSLIDE GR. Ask your agent to import it into a local film library using the [Darkslide input contract](../references/darkslide-import.md).
 
