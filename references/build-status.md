@@ -2,7 +2,7 @@
 
 ## 公开版固件候选构建
 
-`studio-lite/build_firmware.py` 构建和校验容器，把 `fwdc239b.candidate.bin` 写入磁盘并读回核对 SHA-256。输出目录另含 `SHA256.txt`、`studio-project.json` 和 `verification.json`。`PASS_DESKTOP_ARM_CONTAINER` 代表本次桌面检查通过。`BLOCKED_PENDING_RELEASE_VALIDATION` 表示升级文件仍未放行。
+`studio-lite/build_firmware.py` 构建和校验容器，把 `fwdc239b.bin` 写入磁盘并读回核对 SHA-256。输出目录另含 `SHA256.txt`、`studio-project.json` 和 `verification.json`。`PASS_DESKTOP_ARM_CONTAINER` 代表本次桌面检查通过。`camera_status` 记录当次固件的实机验证状态。
 
 离线检查覆盖六槽 DNG 影像控制标记的写入和重新读取、回放槽位和图标、按照片记录显示 Grain，以及经原厂按键入口触发的菜单导航、安装与恢复。绘制回归检查原生绘制回调发出的命令，实机画面和真实照片流程仍待确认。完整验收见 [验证要求](validation.md)。
 

@@ -34,7 +34,7 @@ class EntryContractTests(unittest.TestCase):
         capabilities = json.loads((ROOT / "assets/capabilities.json").read_text())
         builder = (ROOT / "studio-lite/build_firmware.py").is_file()
         self.assertEqual(capabilities["offline_build_checks"], builder)
-        self.assertFalse(capabilities["firmware_container_output"])
+        self.assertEqual(capabilities["firmware_container_output"], builder)
         self.assertFalse(capabilities["sd_deployment"])
 
     def test_distribution_and_private_variants_are_separate(self):

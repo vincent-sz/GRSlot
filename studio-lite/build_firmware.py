@@ -79,7 +79,7 @@ def build_firmware(project, firmware, output):
     project_bytes = project.read_bytes()
     require(sha256(project_bytes) == build["project_sha256"], "Studio project changed during build")
 
-    name = "fwdc239b.candidate.bin"
+    name = "fwdc239b.bin"
     digest = sha256(package)
     receipt = {
         "status": "PASS_DESKTOP_ARM_CONTAINER",
@@ -88,7 +88,6 @@ def build_firmware(project, firmware, output):
         "firmware_path": str(output / name),
         "firmware_sha256": digest,
         "firmware_size": len(package),
-        "upgrade_output": "BLOCKED_PENDING_RELEASE_VALIDATION",
         "stock_sha256": build["factory_sha256"],
         "studio_project_sha256": build["project_sha256"],
         "library_sha256": build["bindings"]["library_sha256"],

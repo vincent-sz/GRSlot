@@ -4,11 +4,11 @@
 
 ## 用户说「请帮我把 GRSlot 装到固件里」
 
-读 `assets/capabilities.json`。当 `firmware_candidate_output` 为 true 且用户已给原厂文件时，直接用仓库随附的开源预设构建本机固件候选。当 `firmware_container_output` 为 false 时，候选仍待发布验收，请用户先保留文件用于验证。
+读 `assets/capabilities.json`。当 `firmware_container_output` 为 true 且用户已给原厂文件时，直接用仓库随附的开源预设构建本机固件。
 
 1. 在仓库根目录检查 `xcrun --find clang`，并用准备运行构建的 Python 确认能 `import unicorn`。缺依赖时告诉用户具体缺项和安装方法。
 2. 用上一步确认可导入 Unicorn 的同一个 Python 解释器运行 `python3 -B studio-lite/build_firmware.py --bundled --firmware "用户提供的原厂 BIN 路径" --output "仓库外的新本机输出目录"`。如果确认的是虚拟环境或其他 Python 路径，就在命令里用该路径替换 `python3`。已有 Studio Lite 项目时，用 `--project "用户提供的 JSON 路径"` 替换 `--bundled`。
-3. 读取新目录里的 `verification.json`。看到 `PASS_DESKTOP_ARM_CONTAINER` 和 `firmware_generated: true` 后，确认 `firmware_path` 指向实际存在的 `fwdc239b.candidate.bin`，再把文件路径、回执路径和实机状态告诉用户。原厂文件只在本机读取。
+3. 读取新目录里的 `verification.json`。看到 `PASS_DESKTOP_ARM_CONTAINER` 和 `firmware_generated: true` 后，确认 `firmware_path` 指向实际存在的 `fwdc239b.bin`，再把文件路径、回执路径和实机状态告诉用户。原厂文件只在本机读取。
 
 ## 用户说「先试一下」或请你打开 Studio Lite
 

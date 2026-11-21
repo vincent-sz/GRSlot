@@ -4,7 +4,7 @@
 
 GRSlot Studio Lite runs in your local browser. Pick from 51 included film presets, assign the six Golden Slots, edit film names, categories, icons and notes, then hand the saved project JSON to an agent running on the same computer.
 
-**Build a local firmware candidate with the bundled open-source presets before importing your own.** For your first run, follow the [repository quick start](../README.md#第一次使用). The candidate is pending camera testing and approval for upgrading. This guide covers editing, saving and validating a Studio Lite project. [Build status](../references/build-status.md)
+**Build a local firmware candidate with the bundled open-source presets before importing your own.** For your first run, follow the [repository quick start](../README.md#第一次使用). The build writes `fwdc239b.bin` and a verification report. This guide covers editing, saving and validating a Studio Lite project. [Build status](../references/build-status.md)
 
 ## 1. See the camera menus and film icons
 

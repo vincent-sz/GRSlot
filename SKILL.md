@@ -10,7 +10,7 @@ metadata:
 
 ## 先读能力状态
 
-读取 [capabilities.json](assets/capabilities.json)。当 `offline_build_checks` 为 true 时可以运行离线构建检查。当 `firmware_candidate_output` 为 true 时，检查通过后保存固件候选。当前 `firmware_container_output` 为 false，升级输出仍待发布验收。
+读取 [capabilities.json](assets/capabilities.json)。当 `offline_build_checks` 为 true 时可以运行离线构建检查。当 `firmware_container_output` 为 true 时，检查通过后保存固件。
 
 首次使用或用户问能否装进相机时，先走 [AGENTS.md](AGENTS.md) 的新手流程。用随附的开源胶片预设跑通一次离线构建检查，再处理自定义胶片。Studio Lite 的配置和保存无需原厂输入，离线构建检查需要原厂输入。
 
@@ -39,7 +39,7 @@ python3 scripts/verify_assets.py
 python3 -B studio-lite/build_firmware.py --bundled --firmware "/absolute/fwdc239b.bin" --output "/absolute/new-output"
 ```
 
-已有随附胶片的 Studio Lite 项目时，用 `--project "/absolute/project.json"` 替换 `--bundled`。输出目录必须尚不存在，父目录需已存在。回执 `PASS_DESKTOP_ARM_CONTAINER` 表示 `fwdc239b.candidate.bin` 已生成并通过电脑检查。升级输出仍为 `BLOCKED_PENDING_RELEASE_VALIDATION`。
+已有随附胶片的 Studio Lite 项目时，用 `--project "/absolute/project.json"` 替换 `--bundled`。输出目录必须尚不存在，父目录需已存在。回执 `PASS_DESKTOP_ARM_CONTAINER` 表示 `fwdc239b.bin` 已生成并通过电脑检查。实机结果见回执中的 `camera_status`。
 
 ### 读取 Studio Lite 项目
 
