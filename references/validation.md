@@ -4,7 +4,7 @@
 
 运行 `python3 -m unittest discover -s tests -v`。指定 `GRSLOT_OFFICIAL_FIRMWARE` 后执行真实原厂容器集成检查。工具必须拒绝错误 SHA、IIIx/其他机型 profile、缺少拟合、来源不匹配、preview 冒充原件、范围声明缺失、非有限数值及参数溢出。
 
-`verify_assets.py` 对照清单逐一核验 profile、三个原生数据文件、原生整数编码、图标尺寸、51 款唯一身份及默认六槽。使用 `python3 scripts/verify_assets.py /absolute/prepared-project` 校验实际交付目录，核对所选胶片与六槽，并检查每款必需文件的完整集合。
+`verify_assets.py` 对照清单逐一核验 profile、三个原生数据文件、原生整数编码、图标尺寸、59 款唯一身份及默认六槽。使用 `python3 scripts/verify_assets.py /absolute/prepared-project` 校验实际交付目录，核对所选胶片与六槽，并检查每款必需文件的完整集合。
 
 `tests/verification.json` 是旧版历史记录。当前结果以本次命令实跑为准。
 
@@ -12,7 +12,7 @@
 
 ## 发布前验收
 
-本地构建器通过内置检查及磁盘读回后生成 `fwdc239b.bin`。首次实机测试的结果需关联该文件的 SHA-256。
+本地构建器通过内置检查及磁盘读回后保存 `GRSlot.NOT-INSTALLABLE`。本次检查覆盖原厂 SHA-256、RTOS、ICONBIN、六槽冷启动调用约定、预设索引、原生图标与文字别名和实际容器读回。首次实机测试的结果需绑定当次固件的完整 SHA-256。
 
 必须对实际产物完成以下检查。
 

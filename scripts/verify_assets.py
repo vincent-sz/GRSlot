@@ -38,9 +38,9 @@ def verify_assets(root=ROOT):
     selected = validate_selection(library)
     defaults = library["defaults"]
     if not prepared:
-        require(defaults == [18, 12, 14, 9, 5, 11], "Unexpected curated defaults")
+        require(defaults == [39, 40, 88, 41, 5, 86], "Unexpected curated defaults")
         require(Counter(f["license"] for f in films) == {
-            "CC-BY-SA-4.0": 16, "MIT": 35,
+            "CC-BY-SA-4.0": 16, "MIT": 35, "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION": 8,
         }, "Unexpected film counts by license")
     for film in films:
         profile_path = root / film["profile"]

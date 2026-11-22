@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "stage": "PUBLIC_LOCAL_CANDIDATE",
+  "stage": "FILMINFO_OFFLINE_CANDIDATE",
   "platform": "macOS",
   "official_input_validation": true,
   "darkslide_project_import": true,
@@ -11,10 +11,10 @@
   "menu_source": true,
   "portable_firmware_build": true,
   "firmware_candidate_output": true,
-  "firmware_container_output": true,
+  "firmware_container_output": false,
   "sd_deployment": false,
-  "reason": "Builds and verifies firmware on macOS using factory GR III 2.10.",
-  "curated_films": 51,
+  "reason": "Builds and verifies a non-installable FilmInfo candidate on macOS. Camera validation is pending.",
+  "curated_films": 59,
   "firmware_camera_tested": false,
   "offline_build_checks": true
 }

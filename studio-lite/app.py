@@ -24,7 +24,8 @@ DEFAULT_LIBRARY = ROOT.parent / "assets/library.json"
 DEFAULT_ICON = ROOT.parent / "assets/icons/ui/category-all/icon.rgba"
 INSTANCE_ID = hashlib.sha256(os.fsencode(ROOT)).hexdigest()
 CATEGORIES = {'kodak': 'Kodak', 'fujifilm': 'Fujifilm', 'digital': 'Digital', 'bw': '黑白', 'other': '其他', 'my-luts': '自定义'}
-GROUPS = {'spk': 'Spektrafilm', 'spec': 'Spectral', 'user-import': '自定义'}
+GROUPS = {'spk': 'Spektrafilm', 'spec': 'Spectral', 'additional': '补充预设', 'user-import': '自定义'}
+PREVIOUS_PUBLIC_LIBRARY = '7016e980f4030954e5343889689e23bb56f0c55f729cc45226f5b6d412c10719'
 
 
 class ProjectError(ValueError):
@@ -48,7 +49,7 @@ def rgba_png(raw):
     return b'\x89PNG\r\n\x1a\n' + png_chunk(b'IHDR', struct.pack('>IIBBBBB', 40, 40, 8, 6, 0, 0, 0)) + png_chunk(b'IDAT', zlib.compress(rows)) + png_chunk(b'IEND', b'')
 
 
-def validate_icon(value):
+def icon_scanlines(value):
     require(type(value) is str and value.startswith('data:image/png;base64,'), '请使用 PNG 图标。')
     try:
         data = base64.b64decode(value.split(',', 1)[1], validate=True)
@@ -80,7 +81,34 @@ def validate_icon(value):
     except zlib.error:
         raise ProjectError('PNG 图标压缩数据无效。') from None
     require(len(raw) == 6440 and decoder.eof and not decoder.unused_data and all(raw[y * 161] <= 4 for y in range(40)), 'PNG 图标像素数据无效。')
-    return value
+    return raw
+
+
+def icon_rgba(value):
+    scanlines = icon_scanlines(value)
+    pixels = bytearray()
+    above = bytes(160)
+    for start in range(0, len(scanlines), 161):
+        mode = scanlines[start]
+        row = bytearray(scanlines[start + 1:start + 161])
+        if mode:
+            for index, value in enumerate(row):
+                left = row[index - 4] if index >= 4 else 0
+                top = above[index]
+                if mode == 1:
+                    predictor = left
+                elif mode == 2:
+                    predictor = top
+                elif mode == 3:
+                    predictor = (left + top) // 2
+                else:
+                    upper_left = above[index - 4] if index >= 4 else 0
+                    estimate = left + top - upper_left
+                    predictor = min((left, top, upper_left), key=lambda pixel: abs(estimate - pixel))
+                row[index] = (value + predictor) & 255
+        pixels.extend(row)
+        above = row
+    return bytes(pixels)
 
 
 class Studio:
@@ -89,6 +117,7 @@ class Studio:
         raw = self.library_path.read_bytes()
         library = json.loads(raw)
         self.library_id = hashlib.sha256(raw).hexdigest()
+        self.bundled = self.library_path == DEFAULT_LIBRARY
         self.data_dir = Path(data_dir).resolve()
         self.project_path = self.data_dir / 'project.json'
         self.lock = threading.Lock()
@@ -104,7 +133,8 @@ class Studio:
             require(not icon_name or icon.is_relative_to(package), '图标路径超出胶片项目目录。')
             require(icon.is_file(), f'胶片 UID {uid} 缺少图标。')
             self.icons[uid] = icon
-            group = {'MIT': 'spec', 'CC-BY-SA-4.0': 'spk'}.get(source.get('license'), 'user-import')
+            group = {'MIT': 'spec', 'CC-BY-SA-4.0': 'spk',
+                     'MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION': 'additional'}.get(source.get('license'), 'user-import')
             self.films.append(dict(uid=uid, name=source['name'],
                                    category=source.get('category', 'other'), group=group,
                                    author=source.get('author', 'Unknown'),
@@ -117,7 +147,9 @@ class Studio:
 
     def validate(self, project):
         require(type(project) is dict and set(project) == {'schema', 'library_id', 'selected', 'overrides', 'slots', 'revision'}, '项目字段无效。')
-        require(type(project['schema']) is int and project['schema'] == 1 and project['library_id'] == self.library_id, '项目与当前胶片库不匹配。')
+        legacy = self.bundled and project['library_id'] == PREVIOUS_PUBLIC_LIBRARY
+        require(type(project['schema']) is int and project['schema'] == 1
+                and (legacy or project['library_id'] == self.library_id), '项目与当前胶片库不匹配。')
         selected, slots, overrides = project['selected'], project['slots'], project['overrides']
         require(type(selected) is list and all(type(uid) is int for uid in selected), '胶片选择无效。')
         require(len(set(selected)) == len(selected) and set(selected) <= self.ids, '胶片选择包含重复或未知 UID。')
@@ -144,7 +176,11 @@ class Studio:
                 require(all(type(design[key]) is str and re.fullmatch(r'#[0-9A-Fa-f]{6}', design[key]) for key in colors), '图标颜色无效。')
                 require(all(type(design[key]) is bool for key in ('divider', 'strip')), '图标色条设置无效。')
             if 'icon' in values:
-                validate_icon(values['icon'])
+                icon_scanlines(values['icon'])
+        if legacy:
+            require(all(uid < 85 for uid in selected) and all(int(uid) < 85 for uid in overrides),
+                    '旧版项目包含未知 UID。')
+            return dict(project, library_id=self.library_id)
         return project
 
     def read(self):
@@ -166,7 +202,7 @@ class Studio:
                 fcntl.flock(lock_file, fcntl.LOCK_UN)
 
     def save(self, project):
-        self.validate(project)
+        project = self.validate(project)
         with self.write_lock():
             current = self.read()
             if current['revision'] != project['revision']:

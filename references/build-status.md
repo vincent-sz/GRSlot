@@ -1,21 +1,17 @@
-# 当前构建状态
+# FilmInfo 公开构建状态
 
-## 公开版固件候选构建
+已报告旧版公开构建在实机上死机。当前构建结果为离线候选，实机状态随每次构建单独记录。请勿将 `GRSlot.NOT-INSTALLABLE` 改名或用于机身更新。
 
-`studio-lite/build_firmware.py` 构建和校验容器，把 `fwdc239b.bin` 写入磁盘并读回核对 SHA-256。输出目录另含 `SHA256.txt`、`studio-project.json` 和 `verification.json`。`PASS_DESKTOP_ARM_CONTAINER` 代表本次桌面检查通过。`camera_status` 记录当次固件的实机验证状态。
+## 实机参考和原厂输入
 
-离线检查覆盖六槽 DNG 影像控制标记的写入和重新读取、回放槽位和图标、按照片记录显示 Grain，以及经原厂按键入口触发的菜单导航、安装与恢复。绘制回归检查原生绘制回调发出的命令，实机画面和真实照片流程仍待确认。完整验收见 [验证要求](validation.md)。
+维护者当前使用的 FilmInfo 固件 SHA-256 为 `cc313eaf3d384ba2d5d3348a620504dc2b4fed12b49ef36736c6b5114b737d0a`，与上一个已实机确认的 FilmInfo 版本相比只有三款图标的像素变化。构建器要求用户本地提供字节一致的标准 GR III 原厂 2.10。
 
-## 撤回的 WorkBuddy 候选
+FilmInfo 在原厂 RTOS 内改动了启动、拍摄、机内 RAW、回放和菜单的调用入口，也在原地址追加 ARM 代码、色彩表、资源和调用跳板。另一个容器块 ICONBIN 有 13 张追加的原生图标，共 83,200 字节。旧公开构建器沿用原厂的 ICONBIN，采用另一套 RTOS 入口。
 
-完整 SHA-256 为 `b59f6d3a8df672e2acedec6a54fa5817b7ee0cc141af9d1b8487be9c460a099f` 的文件已撤回。审查在该文件中复现了 RAW 对象内存分配失败后的空地址访问。请勿用于相机更新。
+两份实机失败的构建为 `311a425dabad4f71f17247413fae174aa73ec45139daeb19d21cd70475e18109` 和 `8f14a49a93d9d7c631b849db814244f43598ab9b8c13df1f742856f42848a375`。重放两份最终容器的启动入口，隔离测试中的设置值写入了另一个设置对象，实际加载目标保持原值。本构建保留 FilmInfo 的启动入口，通过冷启动调用约定及 Assignment 日志读回检查。相机死机的第一处执行位置仍未知。
 
-## 最新私人实机参考
+## 公开候选
 
-FilmInfo 20261118 已通过用户实机验收，对应 SHA-256 `7bbd37207457487b3cb73a47173d6b9b87d7e42984c0765ef60dc525b0d7e54a`。胶片资料页仅显示胶片名、指定署名和已有色温备注。该实机回执用于参考，分发版的源码同步点仍见下节。
+`assets/runtime/filminfo-layout.json` 记录输入哈希、保留的地址布局、运行数据与入口绑定。两个压缩文件承载清理过的 RTOS 差分和原生 ICONBIN 追加图标。菜单 C 源码位于 `source/filminfo/`，在原地址重新链接。历史菜单只保留仍用于跳转的入口。清除英泽君（含 Gold Master）和 Fimo 共 24 款的颜色数据、独有图标、名称、菜单索引和历史副本，也清除退役条目的残留。共享的公开胶片像素继续复用。
 
-## 分发版菜单源码同步点
-
-`GRSlot_Vincent_Work_StdDefault_20261117/firmware/fwdc239b.bin`
-
-SHA-256 为 `a211bbffa63c2151dfba10c64454c9e4ae04e91eedeb55e7dfdd056abcb42672`，Vincent 于 2026-11-17 确认 Slot 3 默认 HNCS Std 的 83 款版本实机 PASS。本包菜单主体保留已同步的品牌分组逻辑，私人扩库及六版本容量在专用本地工作流维护，带品牌—胶片—版本导航及 FAMILIES 绘制修复。通用可移植构建能力继续由 capabilities.json 表示。
+保留的 59 款原生色彩与公开库逐项用 SHA-256 核对。默认六槽沿用 FilmInfo，Studio 的公开 UID 通过显式映射转换。自选项目支持随附胶片、六槽分配和图标覆盖。构建及容器读回验证的边界见 [验证要求](validation.md)。

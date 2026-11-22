@@ -1,16 +1,18 @@
 # GRSlot
 
-GRSlot 为理光 GR III 新增六个独立影像控制槽位。这个版本能在 Mac 上用原厂 2.10 和随附预设生成固件候选。
+GRSlot 为理光 GR III 新增六个独立影像控制槽位。这个版本能在 Mac 上用原厂 2.10 和随附预设生成离线候选。
+
+**刷机暂停。** 旧版公开构建存在死机报告。当前 FilmInfo 构建仅生成 `GRSlot.NOT-INSTALLABLE`，请勿改名或用于机身更新。
 
 ## 第一次使用
 
-先用仓库随附的开源预设跑通构建，再尝试导入自己的预设。首次无需手动选片，构建器会用 Studio Lite 保存一份默认项目。
+先用仓库随附的公开预设跑通构建，再尝试导入自己的预设。首次无需手动选片，构建器会用 Studio Lite 保存一份默认项目。
 
 1. 把 GitHub 下载的 GRSlot 文件夹在 WorkBuddy 或其他能操作本机文件和终端的 Agent 里打开。
 2. 找到标准 **GR III 原厂 2.10** 的 `fwdc239b.bin`，把文件路径告诉 Agent。机型和版本请在相机上确认。
-3. 发下面这段提示。构建成功时，Agent 应给出 `fwdc239b.bin` 和 `verification.json` 的路径。
+3. 发下面这段提示。构建成功时，Agent 应给出 `GRSlot.NOT-INSTALLABLE` 和 `verification.json` 的路径。
 
-> 请帮我把 GRSlot 装到固件里。请读取仓库的 README.md 和 AGENTS.md。我第一次用，请直接用仓库随附的开源预设。原厂 GR III 2.10 固件在［把文件路径贴在这里］。请在本机生成固件候选，把文件和检查回执的路径发给我。
+> 请帮我生成 GRSlot 离线候选。请读取仓库的 README.md 和 AGENTS.md。我第一次用，请直接用仓库随附的公开预设。原厂 GR III 2.10 固件在［把文件路径贴在这里］。请在本机生成离线候选，把文件和检查回执的路径发给我。
 
 离线构建依赖 macOS、Python 3.9+、Apple Command Line Tools，以及当前 Python 环境里的 Unicorn 2.1.4。Agent 可以先查有没有装好。如果只有 Unicorn 缺失，可以在仓库目录建立一个单独的 Python 环境：
 
@@ -30,9 +32,9 @@ python3 -B studio-lite/build_firmware.py --bundled \
 
 首次成功后，双击 `studio-lite/启动 Studio.command`，在 Studio Lite 里用随附胶片调整六槽并保存项目。构建时把 `--bundled` 换成 `--project "已保存项目的路径"`。自定义预设和图文覆盖目前可在 Studio Lite 准备和校验，离线构建入口支持随附胶片和六槽分配。
 
-每次构建在仓库外选一个新输出目录。里面有固件候选、SHA-256 校验值、Studio 项目和检查回执。`PASS_DESKTOP_ARM_CONTAINER` 表示候选通过电脑检查，实机结果记录在回执的 `camera_status`。
+每次构建在仓库外选一个新输出目录。里面有固件候选、SHA-256 校验值、Studio 项目和检查回执。`PASS_OFFLINE_ARM_CONTAINER` 表示候选通过电脑检查，实机结果记录在回执的 `camera_status`。
 
-公开候选的回放记录 Golden 槽位和颗粒。重新给槽位分配胶片后，旧照片的槽位图标会按当前分配显示。
+FilmInfo 的回放沿用 Golden 槽位的显示规则。重新给槽位分配胶片后，旧照片的槽位图标会按当前分配显示。[构建来源和验证状态](references/build-status.md)
 
 ## 实机版的功能
 
@@ -42,7 +44,7 @@ python3 -B studio-lite/build_firmware.py --bundled \
 
 你可以在 DARKSLIDE GR 里拟合自己的 LUT，把它作为 Golden 槽位的胶片，再用机内原生参数微调，做出自己想要的相机直出（SOOC）效果。
 
-[简体中文使用说明](docs/guide.md) · [English user guide](docs/guide.en.md) · [51 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
+[简体中文使用说明](docs/guide.md) · [English user guide](docs/guide.en.md) · [59 款胶片清单](assets/library.json) · [Agent 工作流程](SKILL.md)
 
 ## 作者实机展示
 

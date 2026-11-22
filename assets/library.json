@@ -2,12 +2,12 @@
   "schema": 1,
   "status": "PREPARATION_ONLY_PENDING_PORTABLE_FRAMEWORK",
   "defaults": [
-    18,
-    12,
-    14,
-    9,
+    39,
+    40,
+    88,
+    41,
     5,
-    11
+    86
   ],
   "max_films": null,
   "retired_uids": [
@@ -45,7 +45,7 @@
     48,
     49
   ],
-  "next_uid": 85,
+  "next_uid": 93,
   "films": [
     {
       "uid": 5,
@@ -1096,6 +1096,150 @@
       "icon": "assets/icons/films/vision-320t-5277-spec/icon.rgba",
       "icon_sha256": "79c07b60eef172022e8909a5a0c5d9e6e809ba052403f23f24c05c78914812bb",
       "notes": "3200K"
+    },
+    {
+      "uid": 85,
+      "key": "hncs-portrait",
+      "name": "HNCS Portrait",
+      "category": "digital",
+      "author": "Author not recorded in verified source",
+      "license": "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION",
+      "source_sha256": "0ce5e7f32a3cba183072feb238949dfc134fd4b6506d61a3ba6117da7b3b1b54",
+      "profile": "assets/presets/hncs-portrait/profile.json",
+      "files": {
+        "profile.json": "f6a512bdd1ba3c051b96c0891f92265ed4dd5f8890786526924cc08bd5bd7cbc",
+        "M1_Q13_s16.bin": "07d13621b3b5f4a7277f3f1e12d07d860c92796f3c7e2346db3aa0bdd10f1904",
+        "RGB_GAMMA_u16.bin": "8b15409ae69ac915e096d80e524943cbb204c8eda485aea3c2d03569c12adedb",
+        "M2_NATIVE_CSP_Q13_s32.bin": "679e04bab39a5dbdd62df14579caa12314a222dd56a5ed6e063b57b8244af163"
+      },
+      "icon": "assets/icons/films/hncs-portrait/icon.rgba",
+      "icon_sha256": "5e5311063d751e9f9bbbc8fa8cb1d76ceee2883a9d2937f2ccf833679e2ab885"
+    },
+    {
+      "uid": 86,
+      "key": "vision3-5219-n",
+      "name": "Vision3 5219 N",
+      "category": "kodak",
+      "author": "GRLife preset; original author not recorded",
+      "license": "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION",
+      "source_sha256": "8fa00fc2e1d9eba417ad59943caeed8f08757592dacbb949e9aa141bec3995a1",
+      "profile": "assets/presets/vision3-5219-n/profile.json",
+      "files": {
+        "profile.json": "0afc364cfd575e178d1689331e351308b6ac245da241d1162f2492a7c7d8e5f6",
+        "M1_Q13_s16.bin": "989dc2bc15a0fea928fcd1b68f4a684db8279fb5567a9491cd1e768d44698461",
+        "RGB_GAMMA_u16.bin": "fbc7f0fcb508829936a47a154c023775c104a2b7db94147b24206308f4e2e780",
+        "M2_NATIVE_CSP_Q13_s32.bin": "9ca4f0aed9b4a99b7210908e48d68bc17d1e07fab70a236f4b29aab3e4a65691"
+      },
+      "icon": "assets/icons/films/vision3-5219-n/icon.rgba",
+      "icon_sha256": "77eac8b7c18bd58594dd6d4b5ccf04b9e7cd63e98a334cd09d0e22c60e869094"
+    },
+    {
+      "uid": 87,
+      "key": "ektar-100-film-info",
+      "name": "Ektar 100",
+      "category": "kodak",
+      "author": "Unknown",
+      "license": "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION",
+      "source_sha256": "adc0900e790aff9f0dffe360a199b7b2e57d729f5d88d1459dcc00afc98f92f0",
+      "profile": "assets/presets/ektar-100-film-info/profile.json",
+      "files": {
+        "profile.json": "c6e98f292f44ee565813a373d982332a63931aece6b9fdca2d85c6e36cfd3c2c",
+        "M1_Q13_s16.bin": "ee6c81ca5d0766bf8d105dc9dd0d473e9222984f5e825685c1c9b38e31fe3389",
+        "RGB_GAMMA_u16.bin": "c8d02e500fe6441e8dc021ffe30405a65c893f039c46dd8bc4cc97120d4590a8",
+        "M2_NATIVE_CSP_Q13_s32.bin": "05712bf6f30b0419629932db1265396f7dd7ce9228fee16ccd39655821380cbc"
+      },
+      "icon": "assets/icons/films/ektar-100-film-info/icon.rgba",
+      "icon_sha256": "c55493ae051e0520da9096ebf9a77e0e96cd4414f446424c98f20ee58e103f7b"
+    },
+    {
+      "uid": 88,
+      "key": "hncs-std",
+      "name": "HNCS Std",
+      "category": "digital",
+      "author": "Unknown",
+      "license": "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION",
+      "source_sha256": "29f2fca30dd8a492af1fbde25eb45c004f297d1cff70ca19c191e8437f2741b7",
+      "profile": "assets/presets/hncs-std/profile.json",
+      "files": {
+        "profile.json": "c5c5bb51350c652e93172251e1435193b4646652727276dcd1d1d3773f564bff",
+        "M1_Q13_s16.bin": "12b25d0edc163427484b2976199256f30fa319e548442d6614dddc34e2652bb6",
+        "RGB_GAMMA_u16.bin": "c02dccc08aa76c2d6b64dc33587ffb651e993b5c79dc4b07bfd5bb6177e5e34c",
+        "M2_NATIVE_CSP_Q13_s32.bin": "ae364efc50e521a449c15e090b13012395b751ad3afc9c9793b9816429c145a7"
+      },
+      "icon": "assets/icons/films/hncs-std/icon.rgba",
+      "icon_sha256": "5e5311063d751e9f9bbbc8fa8cb1d76ceee2883a9d2937f2ccf833679e2ab885"
+    },
+    {
+      "uid": 89,
+      "key": "leica-m9",
+      "name": "Leica M9",
+      "category": "digital",
+      "author": "Unknown",
+      "license": "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION",
+      "source_sha256": "637f06df0e634d500c01c0bf3062097c1ce40ab001512c1d92b300a99c61682e",
+      "profile": "assets/presets/leica-m9/profile.json",
+      "files": {
+        "profile.json": "f065c4d1f96cd9db2a0e46161e0698ef6f54110ea515f6364e96f4f2683d79de",
+        "M1_Q13_s16.bin": "3a0a640710ebfbf836a26959e7f24286602f055e18485aaa0dafe266ad3fd5a4",
+        "RGB_GAMMA_u16.bin": "e05293b256a8158ea7ba7f8ecee6d2d09e2f86622551a0d53f1ca49def2f20ad",
+        "M2_NATIVE_CSP_Q13_s32.bin": "5e185c14fafe4e167d8ac355eb59acdd0f8946fb5665a210d7273c91e3e980c4"
+      },
+      "icon": "assets/icons/films/leica-m9/icon.rgba",
+      "icon_sha256": "290ed670f36c79490d25b1db4a20a92c2f8863c4d59cce51268560c65687b7d6"
+    },
+    {
+      "uid": 90,
+      "key": "leica-m9-std",
+      "name": "Leica M9 Std",
+      "category": "digital",
+      "author": "Unknown",
+      "license": "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION",
+      "source_sha256": "85a965051f685a074824c305a8e77067d4355f2c1e496f1b23d013c7a63fe526",
+      "profile": "assets/presets/leica-m9-std/profile.json",
+      "files": {
+        "profile.json": "2e082d4b817db53157a9abc30eb2ce93be9db5d2a10f92038670a44b82dd413b",
+        "M1_Q13_s16.bin": "f9fca4b43dd7f61025fd0f1437524f6606c08168a5f4d870e9cd51457a8e1ead",
+        "RGB_GAMMA_u16.bin": "b5151dc680c8537a8c139b011c6ed5338ae02b6ff3ea72e5504394194313b37c",
+        "M2_NATIVE_CSP_Q13_s32.bin": "e35b234c36cca1354f0436c099793845001328fdf85e04915818e2b991c8364d"
+      },
+      "icon": "assets/icons/films/leica-m9-std/icon.rgba",
+      "icon_sha256": "e8e7e7a6a38dcde72444d227c2a1d9a4a32e4e07042560fdd9eee364c41bd644"
+    },
+    {
+      "uid": 91,
+      "key": "superia-200",
+      "name": "Superia 200",
+      "category": "fujifilm",
+      "author": "Unknown",
+      "license": "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION",
+      "source_sha256": "336af6228c8df2ae29f811e2f2a3272f9bcb1d206c3100e4373f4263c4aaebd0",
+      "profile": "assets/presets/superia-200/profile.json",
+      "files": {
+        "profile.json": "a504a7271479dedb019970a9b23126e798fe880dd33039e6d75e51dd3f72d03f",
+        "M1_Q13_s16.bin": "6f159c25e16347832a74a14e39e39f5130de2f8679461355a42e66ecaf7e3883",
+        "RGB_GAMMA_u16.bin": "ea66f76325c073a9bb99ef391e1115382d639f75efd01ac8c509ed9b1cd351a4",
+        "M2_NATIVE_CSP_Q13_s32.bin": "18048cb0510863e2d1c3d0ede957cf92801f55bda2d9c50c0171dbb016cd25c3"
+      },
+      "icon": "assets/icons/films/superia-200/icon.rgba",
+      "icon_sha256": "fe0933b91b286602e7480bf943d2c76ffd7e38cf8c6fa53b08a25ffb14871b58"
+    },
+    {
+      "uid": 92,
+      "key": "superia-200b",
+      "name": "Superia 200B",
+      "category": "fujifilm",
+      "author": "Unknown",
+      "license": "MAINTAINER_APPROVED_FOR_PUBLIC_DISTRIBUTION",
+      "source_sha256": "257cf185dd32c090c53ce26b111128a34d8377f6d8e0a6e83a03d02e974e06c1",
+      "profile": "assets/presets/superia-200b/profile.json",
+      "files": {
+        "profile.json": "978c2e9291e3a0ebcde066d5d4753713ee630f0a4a41d23cc7058112dfe18772",
+        "M1_Q13_s16.bin": "0bcb61327e6c03ce354af2df13268d713ffe69eb49a60ab07b1fbf0728021ce7",
+        "RGB_GAMMA_u16.bin": "e12ca67ae00024b45981ef4fb7381647ff475321661f051acbe8b25b7baba12c",
+        "M2_NATIVE_CSP_Q13_s32.bin": "7a99b240738cabacb39037719598c3a636d5ce6ad9342c6133eb42b1d1c44de4"
+      },
+      "icon": "assets/icons/films/superia-200b/icon.rgba",
+      "icon_sha256": "2856bcd83cd974f71babd3e8d282c68b2ccc1d7632e53180733839308eb6de69"
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 简体中文 · [English](guide.en.md)
 
-GRSlot Studio Lite 在本机浏览器里管理胶片库和 Golden 六槽。你可以选用随附的 51 款预设，改名称、分类、图标和备注，然后把保存的项目 JSON 交给本机 Agent 校验。
+GRSlot Studio Lite 在本机浏览器里管理胶片库和 Golden 六槽。你可以选用随附的 59 款预设，改名称、分类、图标和备注，然后把保存的项目 JSON 交给本机 Agent 校验。
 
 **先用随附开源预设生成一次固件候选，再导入自己的预设。** 首次构建请参见[仓库首页](../README.md#第一次使用)。下文介绍 Studio Lite 的编辑、保存和独立校验。[当前构建状态](../references/build-status.md)
 
@@ -14,7 +14,7 @@ GRSlot Studio Lite 在本机浏览器里管理胶片库和 Golden 六槽。你�
 
 ![六款胶片图标](images/film-icon-gallery.png)
 
-菜单图来自 FilmInfo 实机确认版的离线渲染，分类页上的 **83 款**是当时实机版的库。这个仓库随附 **51 款**。菜单里的六槽名称和图标会随槽位分配变化。
+菜单图来自 FilmInfo 实机确认版的离线渲染，分类页上的 **83 款**是当时实机版的库。这个仓库随附 **59 款**。菜单里的六槽名称和图标会随槽位分配变化。
 
 ## 2. 在 Studio Lite 选片、配置六槽
 

@@ -25,11 +25,11 @@ Fraction CSP 变换与实际整数系数核验来自既有 `GRSlot_V3Native_P2_2
 
 原始数据作者 Andrea Volpato，项目为 [Spektrafilm](https://github.com/andreavolpato/spektrafilm)。Darkslide 的导出、白点调整及拟合由 LiorMoment 进行。数据及其直接派生结果按 CC BY-SA 4.0，许可和原附加说明完整保留。
 
-公开源码包包含 16 款 Spektrafilm 和 35 款 Spectral Film LUT 的相机拟合预设。Spektrafilm 的 4 款早期拟合以 `(Original Fit)` 区分同名版本。Spectral Film LUT 由 Jan Lohse 开发。35 款实际经 Alcedo 的 ACEScc CUBE 导出，再转换为显示参考 sRGB、由 Darkslide 拟合。Alcedo 的 `spectral_film_lut` 导出包版本为 `2026.10.01.1`。该包的 35 份原始 CUBE 均与 [派生记录](CHANGELOG.txt) 的 SHA-256 一致，包内 MIT 许可与 [仓库随附许可](licenses/SPECTRAL_FILM_LUT_LICENSE.txt) 逐字节一致。Alcedo 打包回执未记载 Spectral 生成器的提交。[Spectral Film LUT 上游仓库](https://github.com/JanLohse/spectral_film_lut)
+公开源码包包含 16 款 Spektrafilm 和 35 款 Spectral Film LUT 的相机拟合预设，以及维护者确认可公开分发的 8 款补充预设。Spektrafilm 的 4 款早期拟合以 `(Original Fit)` 区分同名版本。Spectral Film LUT 由 Jan Lohse 开发。35 款实际经 Alcedo 的 ACEScc CUBE 导出，再转换为显示参考 sRGB、由 Darkslide 拟合。Alcedo 的 `spectral_film_lut` 导出包版本为 `2026.10.01.1`。该包的 35 份原始 CUBE 均与 [派生记录](CHANGELOG.txt) 的 SHA-256 一致，包内 MIT 许可与 [仓库随附许可](licenses/SPECTRAL_FILM_LUT_LICENSE.txt) 逐字节一致。Alcedo 打包回执未记载 Spectral 生成器的提交。[Spectral Film LUT 上游仓库](https://github.com/JanLohse/spectral_film_lut)
 
 ## 图标
 
-来源为 `GRSlot_V3_AllIcons_SourceHanSans_Bold_Fix1_20261103` 中本次准入胶片及 UI 图标。首批 12 款保留描边 SVG 和布局说明，51 款均附 40×40 RGBA。字体为 Adobe Source Han Sans，SIL OFL 1.1 许可随附。本次删除图标 SVG 标题中的显示后缀，保留原有像素。
+来源为 `GRSlot_V3_AllIcons_SourceHanSans_Bold_Fix1_20261103` 中本次准入胶片及 UI 图标。首批 12 款保留描边 SVG 和布局说明，随附的 59 款均有 40×40 RGBA，其中新增 8 款沿用 FilmInfo 对应图标。字体为 Adobe Source Han Sans，SIL OFL 1.1 许可随附。本次删除图标 SVG 标题中的显示后缀，保留原有像素。
 
 ## 容器工具
 

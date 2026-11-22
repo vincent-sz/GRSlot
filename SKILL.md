@@ -10,7 +10,7 @@ metadata:
 
 ## 先读能力状态
 
-读取 [capabilities.json](assets/capabilities.json)。当 `offline_build_checks` 为 true 时可以运行离线构建检查。当 `firmware_container_output` 为 true 时，检查通过后保存固件。
+读取 [capabilities.json](assets/capabilities.json)。当 `offline_build_checks` 为 true 时可以运行离线构建检查。当 `firmware_candidate_output` 为 true 时，检查通过后保存离线候选。当前 `firmware_container_output` 为 false，请勿改名、写卡或刷机。
 
 首次使用或用户问能否装进相机时，先走 [AGENTS.md](AGENTS.md) 的新手流程。用随附的开源胶片预设跑通一次离线构建检查，再处理自定义胶片。Studio Lite 的配置和保存无需原厂输入，离线构建检查需要原厂输入。
 
@@ -39,7 +39,7 @@ python3 scripts/verify_assets.py
 python3 -B studio-lite/build_firmware.py --bundled --firmware "/absolute/fwdc239b.bin" --output "/absolute/new-output"
 ```
 
-已有随附胶片的 Studio Lite 项目时，用 `--project "/absolute/project.json"` 替换 `--bundled`。输出目录必须尚不存在，父目录需已存在。回执 `PASS_DESKTOP_ARM_CONTAINER` 表示 `fwdc239b.bin` 已生成并通过电脑检查。实机结果见回执中的 `camera_status`。
+已有随附胶片的 Studio Lite 项目时，用 `--project "/absolute/project.json"` 替换 `--bundled`。输出目录必须尚不存在，父目录需已存在。回执 `PASS_OFFLINE_ARM_CONTAINER` 表示 `GRSlot.NOT-INSTALLABLE` 已生成并通过电脑检查。实机结果见回执中的 `camera_status`。
 
 ### 读取 Studio Lite 项目
 
@@ -92,7 +92,7 @@ python3 scripts/import_darkslide.py \
 
 ### 准备分发
 
-以 [library.json](assets/library.json) 为准，当前 51 款，包括 16 款 Spektrafilm 和 35 款 Spectral Film LUT。默认 UID 为 18、12、14、9、5、11，新增从 UID85 追加。
+以 [library.json](assets/library.json) 为准，当前 59 款，包括 16 款 Spektrafilm、35 款 Spectral Film LUT 和 8 款补充预设。默认 Studio UID 为 39、40、88、41、5、86。
 
 分发按清单的许可逐款选取文件。公开候选从本次用户原厂输入构建。来源与许可见 [SOURCES.md](SOURCES.md) 和 [第三方声明](THIRD_PARTY_NOTICES.md)。
 

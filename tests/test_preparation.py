@@ -43,7 +43,7 @@ class PreparationTests(unittest.TestCase):
         (self.project / "film_luts.json").write_bytes(json_bytes({self.ident: self.entry}))
 
     def test_all_curated_assets_encode_exactly(self):
-        self.assertEqual(verify_assets()["films"], 51)
+        self.assertEqual(verify_assets()["films"], 59)
 
     def test_fitted_project_native_data(self):
         entry, profile, files = fitted_entry(self.project, self.ident)
@@ -158,8 +158,8 @@ class PreparationTests(unittest.TestCase):
         self.assertEqual(receipt["new_films"], 1)
         self.assertFalse(receipt["firmware_generated"])
         manifest = read_json(first / "library.json")
-        self.assertEqual(manifest["next_uid"], 86)
-        self.assertEqual(manifest["films"][-1]["uid"], 85)
+        self.assertEqual(manifest["next_uid"], 94)
+        self.assertEqual(manifest["films"][-1]["uid"], 93)
         self.assertEqual(receipt["fit_evidence"], "DARKSLIDE_DECLARATION_ONLY")
         self.assertEqual(before, {str(p): p.read_bytes() for p in self.project.rglob("*") if p.is_file()})
         self.profile = dict(reversed(list(self.profile.items())))
@@ -169,10 +169,10 @@ class PreparationTests(unittest.TestCase):
         second = self.folder / "second"
         receipt = prepare(self.project, [self.ident], self.folder / "official.bin", second, first)
         self.assertEqual(receipt["new_films"], 0)
-        self.assertEqual(read_json(second / "library.json")["next_uid"], 86)
+        self.assertEqual(read_json(second / "library.json")["next_uid"], 94)
         with self.assertRaisesRegex(ValueError, "fresh"):
             prepare(self.project, [self.ident], self.folder / "official.bin", first)
-        self.assertEqual(receipt["imported_uids"], [85])
+        self.assertEqual(receipt["imported_uids"], [93])
         self.assertEqual(reordered, {str(p): p.read_bytes() for p in self.project.rglob("*") if p.is_file()})
 
     @patch("import_darkslide.inspect_firmware", return_value={"test_fixture": True})

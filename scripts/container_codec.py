@@ -115,16 +115,20 @@ def blocks(d):
     return out
 
 
-def repack_official_rtos(factory, rtos):
-    """Replace only the RTOS block of the exact supported stock container."""
+def repack_official_rtos(factory, rtos, *, icon_tail=b""):
+    """Replace stock RTOS and append any explicitly supplied native icon pixels."""
     need(sha(factory) == FACTORY, 'Only the exact official GR III 2.10 input is supported')
     original, frames = verify_package(factory)
     need(sha(original) == DECODED, 'Unexpected decoded factory input')
-    header, start, end, _, _ = blocks(original)['RTOS']
+    directory = blocks(original)
+    header, start, end, _, _ = directory['RTOS']
+    icon_header, icon_start, icon_end, _, _ = directory['ICONBIN']
+    need(end <= icon_header and len(icon_tail) % 6400 == 0, 'Invalid ICONBIN append')
     need(len(rtos) >= end - start and len(rtos) % 32 == 0, 'Invalid RTOS size or alignment')
     growth = len(rtos) - (end - start)
-    candidate = bytearray(original[:start] + rtos + original[end:])
+    candidate = bytearray(original[:start] + rtos + original[end:icon_end] + icon_tail + original[icon_end:])
     struct.pack_into('<I', candidate, header + 12, len(rtos))
+    struct.pack_into('<I', candidate, icon_header + growth + 12, icon_end - icon_start + len(icon_tail))
     candidate = checksum(candidate)
     if candidate == original:
         return factory
@@ -133,8 +137,8 @@ def repack_official_rtos(factory, rtos):
     # possible back-reference history match at the new position.
     out = bytearray(factory[:128])
     for begin, encoded_end, low, high in frames:
-        mapped_low = low + (growth if low >= end else 0)
-        mapped_high = high + (growth if high >= end else 0)
+        mapped_low = low + (growth if low >= end else 0) + (len(icon_tail) if low >= icon_end else 0)
+        mapped_high = high + (growth if high >= end else 0) + (len(icon_tail) if high >= icon_end else 0)
         raw = candidate[mapped_low:mapped_high]
         if (raw == original[low:high]
                 and candidate[max(0, mapped_low - 8191):mapped_low] == original[max(0, low - 8191):low]):
